@@ -10,6 +10,7 @@ body {
 
 //Variables
 $color-main: #f08e4a;
+$color-secondary: #8f5e1e;
 
 //Utilities
 
@@ -28,6 +29,10 @@ $color-main: #f08e4a;
 
 .bg-main {
   background: $color-main;
+}
+
+.bg-secondary {
+  background: $color-secondary;
 }
 
 .mg-auto {

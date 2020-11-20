@@ -4,7 +4,9 @@ const Layout = (props) => {
   return (
     <Aux>
       <header>Tollbar, Sidebar, Backdrop</header>
-      <main>{props.children}</main>
+      <main>
+        <div className="bg-secondary">{props.children}</div>
+      </main>
     </Aux>
   );
 };

@@ -15,7 +15,7 @@ class BurgerBuilderPage extends Component {
 
   render() {
     return (
-      <div className="container py-1 bg-main">
+      <div className="container bg-main mg-auto">
         <BurgerView ingredients={this.state.ingredients} />
         <BurgerBuildControls />
       </div>

@@ -13,15 +13,12 @@ const BurgerIngredients = ({ ingredients }) => {
     return arr.concat(el);
   }, []);
 
-  console.log(ingredientsSum.length);
-
   if (ingredientsSum.length === 0) {
     transformedIngredients = (
       <p className="p-1">Please start adding ingredients !!!</p>
     );
   }
 
-  console.log(ingredientsSum);
   return (
     <div className="burger-ingredients py-1 mg-auto">
       <BurgerIngredient type={'bread-top'} />
