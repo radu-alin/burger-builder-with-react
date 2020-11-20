@@ -1,0 +1,35 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Open Sans', sans-serif;
+}
+
+//Variables
+$color-main: #f08e4a;
+
+//Utilities
+
+.py-1 {
+  padding: 1rem;
+}
+
+.p-1 {
+  padding: 1rem;
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.bg-main {
+  background: $color-main;
+}
+
+.mg-auto {
+  margin: 0 auto;
+}
