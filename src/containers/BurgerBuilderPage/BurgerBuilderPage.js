@@ -6,10 +6,10 @@ import BurgerBuildControls from '../../components/Burger/BurgerBuildControls/Bur
 class BurgerBuilderPage extends Component {
   state = {
     ingredients: {
-      bacon: 1,
-      cheese: 1,
-      salad: 1,
-      meat: 1,
+      bacon: 0,
+      cheese: 0,
+      salad: 0,
+      meat: 0,
     },
   };
 
