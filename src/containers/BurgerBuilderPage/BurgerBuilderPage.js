@@ -2,6 +2,8 @@ import { Component } from 'react';
 
 import BurgerView from '../../components/Burger/BurgerView/BurgerView';
 import BurgerBuildControls from '../../components/Burger/BurgerBuildControls/BurgerBuildControls';
+import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
+import Modal from '../../components/UI/Modal/Modal';
 
 const INGREDIENT_PRICES = {
   bacon: 0.7,
@@ -18,15 +20,8 @@ class BurgerBuilderPage extends Component {
       meat: 0,
     },
     totalPrice: 4,
-    purchasable: false,
-  };
-
-  updatePurchasableState = (price) => {
-    if (price > 4) {
-      this.setState({ purchasable: true });
-    } else {
-      this.setState({ purchasable: false });
-    }
+    enableOrderNow: false,
+    enableCheckout: false,
   };
 
   addIngredientHandler = (type) => {
@@ -45,7 +40,7 @@ class BurgerBuilderPage extends Component {
       totalPrice: updatedPrice,
     });
 
-    this.updatePurchasableState(updatedPrice);
+    this.enableButtonOrderNowHandler(updatedPrice);
   };
 
   removeIngredientHandler = (type) => {
@@ -67,10 +62,10 @@ class BurgerBuilderPage extends Component {
       totalPrice: updatedPrice,
     });
 
-    this.updatePurchasableState(updatedPrice);
+    this.enableButtonOrderNowHandler(updatedPrice);
   };
 
-  disableButtonHandler = () => {
+  enableButtonLessHandler = () => {
     const disableInfo = {
       ...this.state.ingredients,
     };
@@ -80,19 +75,46 @@ class BurgerBuilderPage extends Component {
     return disableInfo;
   };
 
+  enableButtonOrderNowHandler = (price) => {
+    if (price > 4) {
+      this.setState({ enableOrderNow: true });
+    } else {
+      this.setState({ enableOrderNow: false });
+    }
+  };
+
+  enableCheckoutHandler = () => {
+    this.setState({ enableCheckout: true });
+  };
+
+  disableCheckoutHandler = () => {
+    this.setState({ enableCheckout: false });
+  };
+
   render() {
+    const renderModal = () => (
+      <Modal
+        show={this.state.enableCheckout}
+        disableModal={this.disableCheckoutHandler}
+      >
+        <OrderSummary ingredients={this.state.ingredients} />
+      </Modal>
+    );
+
     return (
-      <div className="container mg-0-auto">
+      <div id="BurgerBuilderPage" className="container mg-0-auto p-1">
+        {renderModal()}
         <section id="BurgerView">
           <BurgerView ingredients={this.state.ingredients} />
         </section>
         <section id="BurgerBuildControls">
           <BurgerBuildControls
-            buttonLessDisabled={this.disableButtonHandler()}
+            buttonLessDisabled={this.enableButtonLessHandler()}
             ingAdd={this.addIngredientHandler}
             ingRemove={this.removeIngredientHandler}
             totalPrice={this.state.totalPrice}
-            buttonOrderDisabled={this.state.purchasable}
+            buttonOrderDisabled={this.state.enableOrderNow}
+            enableCheckout={this.enableCheckoutHandler}
           />
         </section>
       </div>

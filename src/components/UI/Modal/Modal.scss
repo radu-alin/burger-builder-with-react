@@ -1,0 +1,35 @@
+.modal {
+  width: 480px;
+  box-sizing: border-box;
+  position: fixed;
+  top: 30%;
+  left: calc(50% - 240px);
+  padding: 3rem;
+  background: #c9c9c9;
+  border: 1px solid #ccc;
+  box-shadow: 1px 1px 1px black;
+  transition: all 0.3s ease-out;
+  transform: translateY(-100vh);
+
+  &.show {
+    transform: translateX(0);
+  }
+  @media (max-width: 768px) {
+    width: 400px;
+    left: calc(50% - 200px);
+    padding-left: 3rem;
+  }
+  @media (max-width: 500px) {
+    width: 300px;
+    left: calc(50% - 150px);
+    padding-left: 3rem;
+  }
+
+  & .modal-content {
+    width: 100%;
+
+    &p {
+      padding: 1rem;
+    }
+  }
+}

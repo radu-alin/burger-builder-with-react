@@ -28,6 +28,7 @@ const BurgerBuildControls = ({
   buttonLessDisabled,
   buttonOrderDisabled,
   totalPrice,
+  enableCheckout,
 }) => {
   const renderButtons = controls.map((control) => {
     return (
@@ -49,6 +50,7 @@ const BurgerBuildControls = ({
       <Button
         type={'more order'}
         spacing={'my-1'}
+        onClickAction={enableCheckout}
         disabled={!buttonOrderDisabled}
       >
         Order Now
