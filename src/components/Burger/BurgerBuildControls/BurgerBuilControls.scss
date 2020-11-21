@@ -1,7 +1,10 @@
 .build-controls {
+  width: 450px;
   background-color: #cf8f2e;
   display: flex;
   flex-flow: column;
   justify-content: center;
   align-items: center;
+  border: 1px solid #555;
+  font-weight: bold;
 }
