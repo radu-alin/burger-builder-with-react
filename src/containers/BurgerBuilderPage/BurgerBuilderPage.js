@@ -18,6 +18,15 @@ class BurgerBuilderPage extends Component {
       meat: 0,
     },
     totalPrice: 4,
+    purchasable: false,
+  };
+
+  updatePurchasableState = (price) => {
+    if (price > 4) {
+      this.setState({ purchasable: true });
+    } else {
+      this.setState({ purchasable: false });
+    }
   };
 
   addIngredientHandler = (type) => {
@@ -35,6 +44,8 @@ class BurgerBuilderPage extends Component {
       ingredients: updatedIngredients,
       totalPrice: updatedPrice,
     });
+
+    this.updatePurchasableState(updatedPrice);
   };
 
   removeIngredientHandler = (type) => {
@@ -49,12 +60,14 @@ class BurgerBuilderPage extends Component {
     updatedIngredients[type] = updatedCount;
     const priceDeduction = INGREDIENT_PRICES[type];
     const oldPrice = this.state.totalPrice;
-    const updatedPrice = oldPrice + priceDeduction;
+    const updatedPrice = oldPrice - priceDeduction;
 
     this.setState({
       ingredients: updatedIngredients,
       totalPrice: updatedPrice,
     });
+
+    this.updatePurchasableState(updatedPrice);
   };
 
   disableButtonHandler = () => {
@@ -69,14 +82,19 @@ class BurgerBuilderPage extends Component {
 
   render() {
     return (
-      <div className="container bg-main mg-auto">
-        <BurgerView ingredients={this.state.ingredients} />
-        <BurgerBuildControls
-          buttonDisabled={this.disableButtonHandler()}
-          ingAdd={this.addIngredientHandler}
-          ingRemove={this.removeIngredientHandler}
-          totalPrice={this.state.totalPrice}
-        />
+      <div className="container mg-0-auto">
+        <section id="BurgerView">
+          <BurgerView ingredients={this.state.ingredients} />
+        </section>
+        <section id="BurgerBuildControls">
+          <BurgerBuildControls
+            buttonLessDisabled={this.disableButtonHandler()}
+            ingAdd={this.addIngredientHandler}
+            ingRemove={this.removeIngredientHandler}
+            totalPrice={this.state.totalPrice}
+            buttonOrderDisabled={this.state.purchasable}
+          />
+        </section>
       </div>
     );
   }

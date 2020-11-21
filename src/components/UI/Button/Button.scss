@@ -1,9 +1,9 @@
 .btn {
-  display: block;
-  font: inherit;
-  padding: 5px;
-  margin: 0 5px;
   width: 80px;
+  display: block;
+  margin: 0 5px;
+  padding: 5px;
+  font: inherit;
   border: 1px solid #aa6817;
   border-radius: 7px;
   cursor: pointer;
@@ -18,15 +18,10 @@
       background-color: #daa972;
       color: white;
     }
-    &:disabled {
+    &:disabled,
+    &:disabled:hover {
       background-color: #ac9980;
       border: 1px solid #7e7365;
-      color: #ccc;
-      cursor: default;
-    }
-
-    &:hover:disabled {
-      background-color: #ac9980;
       color: #ccc;
       cursor: not-allowed;
     }
@@ -36,23 +31,43 @@
     background-color: #8f5e1e;
     color: white;
 
+    &.order {
+      width: 160px;
+
+      &:disabled,
+      &:disabled:hover {
+        background-color: #ac9980;
+        border: 1px solid #7e7365;
+        color: #ccc;
+        cursor: not-allowed;
+      }
+
+      &:not(:disabled) {
+        animation: enable 0.3s linear;
+      }
+    }
+
+    &.my-1 {
+      margin: 1rem 0;
+      padding: 10px;
+    }
+
     &:hover,
     &:active {
       background-color: #99703f;
       color: white;
     }
   }
+
+  @keyframes enable {
+    0% {
+      transform: scale(1);
+    }
+    60% {
+      transform: scale(1.1);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
 }
-
-// .BuildControl button:disabled {
-//   background-color: #ac9980;
-//   border: 1px solid #7e7365;
-//   color: #ccc;
-//   cursor: default;
-// }
-
-// .BuildControl button:hover:disabled {
-//   background-color: #ac9980;
-//   color: #ccc;
-//   cursor: not-allowed;
-// }

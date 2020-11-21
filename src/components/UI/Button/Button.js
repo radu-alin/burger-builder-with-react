@@ -1,12 +1,11 @@
 import './Button.scss';
 
-const Button = ({ children, type, onClickAction, disabled }) => {
-  let classes = 'btn';
-  if (type === 'less') {
-    classes = 'btn less';
-  }
-  if (type === 'more') {
-    classes = 'btn more';
+const Button = ({ children, type, spacing, onClickAction, disabled }) => {
+  let classes = '';
+  classes = `btn ${type}`;
+
+  if (spacing) {
+    classes = `${classes} ${spacing}`;
   }
 
   return (

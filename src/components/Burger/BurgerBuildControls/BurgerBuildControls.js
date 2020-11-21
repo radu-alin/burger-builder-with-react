@@ -1,4 +1,5 @@
 import BurgerBuildControl from './BurgerBuildControl/BurgerBuildControl';
+import Button from '../../UI/Button/Button';
 
 import './BurgerBuilControls.scss';
 
@@ -22,9 +23,10 @@ const controls = [
 ];
 
 const BurgerBuildControls = ({
-  buttonDisabled,
   ingAdd,
   ingRemove,
+  buttonLessDisabled,
+  buttonOrderDisabled,
   totalPrice,
 }) => {
   const renderButtons = controls.map((control) => {
@@ -32,7 +34,7 @@ const BurgerBuildControls = ({
       <BurgerBuildControl
         key={control.type}
         label={control.label}
-        buttonDisabled={buttonDisabled[control.type]}
+        buttonLessDisabled={buttonLessDisabled[control.type]}
         ingRemove={() => ingRemove(control.type)}
         ingAdd={() => ingAdd(control.type)}
         totalPrice={totalPrice}
@@ -41,9 +43,16 @@ const BurgerBuildControls = ({
   });
 
   return (
-    <div className="build-controls p-1 mg-auto">
+    <div className="build-controls p-1 mg-1-auto ">
       <p className="p-1">Price: &#8364; {totalPrice.toFixed(2)}</p>
       {renderButtons}
+      <Button
+        type={'more order'}
+        spacing={'my-1'}
+        disabled={!buttonOrderDisabled}
+      >
+        Order Now
+      </Button>
     </div>
   );
 };

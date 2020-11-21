@@ -4,7 +4,7 @@ import './BurgerView.scss';
 
 const BurgerView = ({ ingredients }) => {
   return (
-    <div className="burger-view p-1 mg-auto">
+    <div className="burger-view py-1 mg-0-auto">
       <BurgerIngredients ingredients={ingredients} />
     </div>
   );
