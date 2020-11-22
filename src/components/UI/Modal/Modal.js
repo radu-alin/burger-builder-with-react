@@ -9,8 +9,6 @@ import './Modal.scss';
 const Modal = ({ children, show, disableModal }) => {
   let classes = show ? 'modal show' : 'modal';
 
-  console.log(classes);
-
   return ReactDom.createPortal(
     <Aux>
       <Backdrop show={show} disableModal={disableModal} />

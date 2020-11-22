@@ -91,13 +91,22 @@ class BurgerBuilderPage extends Component {
     this.setState({ enableCheckout: false });
   };
 
+  continueCheckoutHandler = () => {
+    alert('you continue');
+  };
+
   render() {
     const renderModal = () => (
       <Modal
         show={this.state.enableCheckout}
         disableModal={this.disableCheckoutHandler}
       >
-        <OrderSummary ingredients={this.state.ingredients} />
+        <OrderSummary
+          ingredients={this.state.ingredients}
+          totalPrice={this.state.totalPrice}
+          cancelPurchase={this.disableCheckoutHandler}
+          continuePurchase={this.continueCheckoutHandler}
+        />
       </Modal>
     );
 

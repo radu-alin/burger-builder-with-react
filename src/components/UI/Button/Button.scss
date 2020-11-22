@@ -1,13 +1,14 @@
 .btn {
-  width: 80px;
-  display: block;
+  width: 90px;
+  display: inline-block;
   margin: 0 5px;
-  padding: 5px;
+  padding: 3px;
   font: inherit;
   border: 1px solid #aa6817;
   border-radius: 7px;
   cursor: pointer;
   outline: none;
+  text-align: center;
 
   &.less {
     background-color: #d39952;
@@ -31,32 +32,32 @@
     background-color: #8f5e1e;
     color: white;
 
-    &.order {
-      width: 160px;
-
-      &:disabled,
-      &:disabled:hover {
-        background-color: #ac9980;
-        border: 1px solid #7e7365;
-        color: #ccc;
-        cursor: not-allowed;
-      }
-
-      &:not(:disabled) {
-        animation: enable 0.3s linear;
-      }
-    }
-
-    &.my-1 {
-      margin: 1rem 0;
-      padding: 10px;
-    }
-
     &:hover,
     &:active {
       background-color: #99703f;
       color: white;
     }
+  }
+
+  &.order {
+    width: 130px;
+
+    &:disabled,
+    &:disabled:hover {
+      background-color: #ac9980;
+      border: 1px solid #7e7365;
+      color: #ccc;
+      cursor: not-allowed;
+    }
+
+    &:not(:disabled) {
+      animation: enable 0.3s linear;
+    }
+  }
+
+  &.my-1 {
+    margin: 1rem 1rem;
+    padding: 10px;
   }
 
   @keyframes enable {
