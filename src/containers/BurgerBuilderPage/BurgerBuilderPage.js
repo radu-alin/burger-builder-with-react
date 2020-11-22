@@ -111,22 +111,18 @@ class BurgerBuilderPage extends Component {
     );
 
     return (
-      <div id="BurgerBuilderPage" className="container mg-0-auto p-1">
+      <main id="BurgerBuilderPage">
         {renderModal()}
-        <section id="BurgerView">
-          <BurgerView ingredients={this.state.ingredients} />
-        </section>
-        <section id="BurgerBuildControls">
-          <BurgerBuildControls
-            buttonLessDisabled={this.enableButtonLessHandler()}
-            ingAdd={this.addIngredientHandler}
-            ingRemove={this.removeIngredientHandler}
-            totalPrice={this.state.totalPrice}
-            buttonOrderDisabled={this.state.enableOrderNow}
-            enableCheckout={this.enableCheckoutHandler}
-          />
-        </section>
-      </div>
+        <BurgerView ingredients={this.state.ingredients} />
+        <BurgerBuildControls
+          buttonLessDisabled={this.enableButtonLessHandler()}
+          ingAdd={this.addIngredientHandler}
+          ingRemove={this.removeIngredientHandler}
+          totalPrice={this.state.totalPrice}
+          buttonOrderDisabled={this.state.enableOrderNow}
+          enableCheckout={this.enableCheckoutHandler}
+        />
+      </main>
     );
   }
 }

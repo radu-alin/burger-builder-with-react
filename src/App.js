@@ -1,19 +1,15 @@
 import { Component } from 'react';
 
-import Aux from './hoc/Aux/Aux';
-
 import BurgerBuilderPage from './containers/BurgerBuilderPage/BurgerBuilderPage';
+import Toolbar from './components/Navigation/Toolbar/Toolbar';
 
+import Aux from './hoc/Aux/Aux';
 class App extends Component {
   render() {
     return (
       <Aux>
-        <header>
-          <p>Toolbar, Sidebar, Backdrop</p>
-        </header>
-        <main className="bg-brown-main">
-          <BurgerBuilderPage />
-        </main>
+        <Toolbar />
+        <BurgerBuilderPage />
       </Aux>
     );
   }

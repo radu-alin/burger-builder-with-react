@@ -6,9 +6,8 @@ const Button = ({ children, type, spacing, onClickAction, disabled }) => {
   classes = `btn ${type}`;
 
   //spacing options: my-1
-  if (spacing) {
-    classes = `${classes} ${spacing}`;
-  }
+
+  classes = spacing ? `${classes} ${spacing}` : `${classes}`;
 
   return (
     <button className={classes} onClick={onClickAction} disabled={disabled}>

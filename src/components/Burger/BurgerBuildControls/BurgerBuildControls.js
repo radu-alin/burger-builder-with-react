@@ -44,7 +44,7 @@ const BurgerBuildControls = ({
   });
 
   return (
-    <div className="build-controls p-1 mg-1-auto ">
+    <section id="BurgerBuildControls" className="build-controls p-1 my-2   ">
       <p className="p-1">Price: &#8364; {totalPrice.toFixed(2)}</p>
       {renderButtons}
       <Button
@@ -55,7 +55,7 @@ const BurgerBuildControls = ({
       >
         Order Now
       </Button>
-    </div>
+    </section>
   );
 };
 

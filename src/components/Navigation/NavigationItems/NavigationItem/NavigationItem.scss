@@ -1,0 +1,18 @@
+.navigation-item {
+  height: 100%;
+  display: flex;
+
+  & a {
+    height: 100%;
+    padding: 16px 10px;
+    border-bottom: 7px solid transparent;
+
+    &:hover,
+    &:active,
+    &.active {
+      background: #99703f;
+      border-radius: 9px;
+      border-bottom: 7px solid #ac9980;
+    }
+  }
+}
