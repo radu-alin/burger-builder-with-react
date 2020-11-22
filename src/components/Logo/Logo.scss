@@ -1,7 +1,17 @@
 .logo {
   padding: 10px;
-  height: 90%;
   border-radius: 5px;
+
+  &.toolbar-height {
+    height: 80%;
+  }
+
+  &.side-drawer-height {
+    width: 100%;
+    display: inline-block;
+    height: 7%;
+    text-align: center;
+  }
 
   & img {
     height: 100%;

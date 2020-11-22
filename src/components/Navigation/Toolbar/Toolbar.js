@@ -6,7 +6,7 @@ import './Toolbar.scss';
 const Toolbar = () => (
   <header id="Toolbar" className="toolbar pa-1 bg-brown-dark">
     <div>Menu</div>
-    <Logo />
+    <Logo size={'toolbar-height'} />
     <NavigationItems />
   </header>
 );

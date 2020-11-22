@@ -5,6 +5,10 @@
   align-items: center;
   justify-content: space-between;
 
+  @media (max-width: 500px) {
+    width: 100%;
+  }
+
   & .label {
     display: inline-block;
     padding: 10px;
