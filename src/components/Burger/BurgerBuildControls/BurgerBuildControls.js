@@ -44,7 +44,7 @@ const BurgerBuildControls = ({
   });
 
   return (
-    <section id="BurgerBuildControls" className="build-controls p-1 my-2   ">
+    <section id="BurgerBuildControls" className="build-controls p-1 my-2">
       <p className="p-1">Price: &#8364; {totalPrice.toFixed(2)}</p>
       {renderButtons}
       <Button

@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { Component, Profiler } from 'react';
 
 import BurgerView from '../../components/Burger/BurgerView/BurgerView';
 import BurgerBuildControls from '../../components/Burger/BurgerBuildControls/BurgerBuildControls';
@@ -95,24 +95,36 @@ class BurgerBuilderPage extends Component {
     alert('you continue');
   };
 
-  render() {
-    const renderModal = () => (
-      <Modal
-        show={this.state.enableCheckout}
-        disableModal={this.disableCheckoutHandler}
-      >
-        <OrderSummary
-          ingredients={this.state.ingredients}
-          totalPrice={this.state.totalPrice}
-          cancelPurchase={this.disableCheckoutHandler}
-          continuePurchase={this.continueCheckoutHandler}
-        />
-      </Modal>
-    );
+  renderModal = (condition) => {
+    if (condition) {
+      return (
+        <Profiler
+          id="renderModal"
+          onRender={(id, phase, actualDuration) =>
+            console.log({ id, phase, actualDuration })
+          }
+        >
+          <Modal
+            show={this.state.enableCheckout}
+            disableModal={this.disableCheckoutHandler}
+          >
+            <OrderSummary
+              ingredients={this.state.ingredients}
+              totalPrice={this.state.totalPrice}
+              cancelPurchase={this.disableCheckoutHandler}
+              continuePurchase={this.continueCheckoutHandler}
+            />
+          </Modal>
+        </Profiler>
+      );
+    }
+    return;
+  };
 
+  render() {
     return (
       <main id="BurgerBuilderPage">
-        {renderModal()}
+        {this.renderModal(this.state.enableCheckout)}
         <BurgerView ingredients={this.state.ingredients} />
         <BurgerBuildControls
           buttonLessDisabled={this.enableButtonLessHandler()}
