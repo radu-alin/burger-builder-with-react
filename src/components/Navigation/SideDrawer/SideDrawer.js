@@ -6,11 +6,14 @@ import Aux from '../../../hoc/Aux/Aux';
 
 import './SideDrawer.scss';
 
-const Sidedrawer = () => {
+const Sidedrawer = ({ closeSideDrawer, showSideDrawer }) => {
+  const classes = showSideDrawer
+    ? 'side-drawer open p-2 bg-brown-dark'
+    : 'side-drawer close p-2 bg-brown-dark';
   return (
     <Aux>
-      <Backdrop show />
-      <header id="SideDrawer" className="side-drawer p-2 bg-brown-dark">
+      <Backdrop onClickAction={closeSideDrawer} show={showSideDrawer} />
+      <header id="SideDrawer" className={classes}>
         <Logo size={'side-drawer-height'} />
         <NavigationItems />
       </header>

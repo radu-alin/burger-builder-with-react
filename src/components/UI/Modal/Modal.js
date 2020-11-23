@@ -11,7 +11,7 @@ const Modal = ({ children, show, disableModal }) => {
 
   return ReactDom.createPortal(
     <Aux>
-      <Backdrop show={show} disableModal={disableModal} />
+      <Backdrop show={show} onClickAction={disableModal} />
       <div className={classes}>
         <div className="modal-content">{children}</div>
       </div>

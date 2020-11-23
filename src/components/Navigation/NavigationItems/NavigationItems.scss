@@ -1,5 +1,20 @@
-.navigation-items {
+.only-desktop {
   height: 100%;
+
+  @media (max-width: 500px) {
+    display: none;
+  }
+}
+
+nav {
+  width: 100%;
+
+  @media (min-width: 500px) {
+    width: auto;
+  }
+}
+
+.navigation-items {
   width: 100%;
 
   & ul {
@@ -9,6 +24,7 @@
   }
 
   @media (min-width: 500px) {
+    height: 100%;
     width: auto;
     display: flex;
     justify-content: space-between;

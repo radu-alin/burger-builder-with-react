@@ -1,18 +1,14 @@
 import { Component } from 'react';
 
 import BurgerBuilderPage from './containers/BurgerBuilderPage/BurgerBuilderPage';
-import Toolbar from './components/Navigation/Toolbar/Toolbar';
-import SideDrawer from './components/Navigation/SideDrawer/SideDrawer';
+import Layout from './components/Layout/Layout';
 
-import Aux from './hoc/Aux/Aux';
 class App extends Component {
   render() {
     return (
-      <Aux>
-        <SideDrawer />
-        <Toolbar />
+      <Layout>
         <BurgerBuilderPage />
-      </Aux>
+      </Layout>
     );
   }
 }
