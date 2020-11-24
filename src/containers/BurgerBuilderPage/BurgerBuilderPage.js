@@ -1,9 +1,15 @@
-import { Component, Profiler } from 'react';
+import { Component } from 'react';
 
 import BurgerView from '../../components/Burger/BurgerView/BurgerView';
 import BurgerBuildControls from '../../components/Burger/BurgerBuildControls/BurgerBuildControls';
 import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
 import Modal from '../../components/UI/Modal/Modal';
+
+import Spinner from '../../components/UI/Spinner/Spinner';
+
+import Aux from '../../hoc/Aux/Aux';
+import withErrorHandler from '../../hoc/withtErrorHandler/withErrorHandler';
+import axiosFirebase from '../../axios-orders';
 
 const INGREDIENT_PRICES = {
   bacon: 0.7,
@@ -13,16 +19,22 @@ const INGREDIENT_PRICES = {
 };
 class BurgerBuilderPage extends Component {
   state = {
-    ingredients: {
-      bacon: 0,
-      cheese: 0,
-      salad: 0,
-      meat: 0,
-    },
+    ingredients: null,
     totalPrice: 4,
     enableOrderNow: false,
     enableCheckout: false,
+    loading: false,
+    error: false,
   };
+
+  componentDidMount() {
+    axiosFirebase
+      .get('https://burger-builder-react-37b35.firebaseio.com/ingredients.json')
+      .then((res) => {
+        this.setState({ ingredients: res.data });
+      })
+      .catch((err) => this.setState({ error: true }));
+  }
 
   addIngredientHandler = (type) => {
     const oldCount = this.state.ingredients[type];
@@ -92,51 +104,79 @@ class BurgerBuilderPage extends Component {
   };
 
   continueCheckoutHandler = () => {
-    alert('you continue');
+    this.setState({ loading: true });
+    const data = {
+      ingredients: this.state.ingredients,
+      price: this.state.totalPrice,
+      customer: {
+        name: 'Alin RADU',
+        address: {
+          street: 'testStreet',
+          zipCode: '550036',
+          country: 'Romania',
+        },
+        email: 'testEmail@test.com',
+      },
+      deliveryMethod: 'fastest',
+    };
+    axiosFirebase
+      .post('/orders.json', data)
+      .then((response) => {
+        this.setState({ loading: false, enableCheckout: false });
+      })
+      .catch((error) => {
+        this.setState({ loading: false, enableCheckout: false });
+      });
   };
 
   renderModal = (condition) => {
+    const orderSummary = this.state.loading ? (
+      <Spinner />
+    ) : (
+      <OrderSummary
+        ingredients={this.state.ingredients}
+        totalPrice={this.state.totalPrice}
+        cancelPurchase={this.disableCheckoutHandler}
+        continuePurchase={this.continueCheckoutHandler}
+      />
+    );
     if (condition) {
       return (
-        <Profiler
-          id="renderModal"
-          onRender={(id, phase, actualDuration) =>
-            console.log({ id, phase, actualDuration })
-          }
+        <Modal
+          show={this.state.enableCheckout}
+          disableModal={this.disableCheckoutHandler}
         >
-          <Modal
-            show={this.state.enableCheckout}
-            disableModal={this.disableCheckoutHandler}
-          >
-            <OrderSummary
-              ingredients={this.state.ingredients}
-              totalPrice={this.state.totalPrice}
-              cancelPurchase={this.disableCheckoutHandler}
-              continuePurchase={this.continueCheckoutHandler}
-            />
-          </Modal>
-        </Profiler>
+          {orderSummary}
+        </Modal>
       );
     }
     return;
   };
 
   render() {
+    let viewPage = this.state.error ? <h1>Hello</h1> : <Spinner />;
+    if (this.state.ingredients) {
+      viewPage = (
+        <Aux>
+          <BurgerView ingredients={this.state.ingredients} />
+          <BurgerBuildControls
+            buttonLessDisabled={this.enableButtonLessHandler()}
+            ingAdd={this.addIngredientHandler}
+            ingRemove={this.removeIngredientHandler}
+            totalPrice={this.state.totalPrice}
+            buttonOrderDisabled={this.state.enableOrderNow}
+            enableCheckout={this.enableCheckoutHandler}
+          />
+        </Aux>
+      );
+    }
     return (
       <main id="BurgerBuilderPage">
         {this.renderModal(this.state.enableCheckout)}
-        <BurgerView ingredients={this.state.ingredients} />
-        <BurgerBuildControls
-          buttonLessDisabled={this.enableButtonLessHandler()}
-          ingAdd={this.addIngredientHandler}
-          ingRemove={this.removeIngredientHandler}
-          totalPrice={this.state.totalPrice}
-          buttonOrderDisabled={this.state.enableOrderNow}
-          enableCheckout={this.enableCheckoutHandler}
-        />
+        {viewPage}
       </main>
     );
   }
 }
 
-export default BurgerBuilderPage;
+export default withErrorHandler(BurgerBuilderPage, axiosFirebase);
