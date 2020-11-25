@@ -21,9 +21,11 @@ class ContactDataPage extends Component {
   orderHandler = (event) => {
     event.preventDefault();
     this.setState({ loading: true });
+    const date = new Date();
     const data = {
       ingredients: this.props.ingredients,
-      price: this.state.totalPrice,
+      totalPrice: this.props.totalPrice,
+      orderDate: date.toLocaleString(),
       customer: {
         name: 'Alin RADU',
         address: {

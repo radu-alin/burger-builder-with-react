@@ -7,10 +7,8 @@ const NavigationItems = ({ showOnDektop }) => {
   return (
     <nav className={classes}>
       <ul id="NavigationItems" className="navigation-items">
-        <NavigationItem link="/" active>
-          Burger Builder
-        </NavigationItem>
-        <NavigationItem link="/">CheckOut</NavigationItem>
+        <NavigationItem link="/">Burger Builder</NavigationItem>
+        <NavigationItem link="/orders">Orders</NavigationItem>
       </ul>
     </nav>
   );
