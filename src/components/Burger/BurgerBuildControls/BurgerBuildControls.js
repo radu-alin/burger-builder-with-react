@@ -44,17 +44,21 @@ const BurgerBuildControls = ({
   });
 
   return (
-    <section id="BurgerBuildControls" className="build-controls p-1 my-2">
-      <p className="p-1">Price: &#8364; {totalPrice.toFixed(2)}</p>
-      {renderButtons}
-      <Button
-        type={'more order'}
-        spacing={'my-1'}
-        onClickAction={enableCheckout}
-        disabled={!buttonOrderDisabled}
-      >
-        Order Now
-      </Button>
+    <section id="BurgerBuildControls" className="bg-brown-main">
+      <div className="container py-2">
+        <div className="build-controls mg-auto">
+          <p className="p-1">Price: &#8364; {totalPrice.toFixed(2)}</p>
+          {renderButtons}
+          <Button
+            type={'more order'}
+            spacing={'my-1'}
+            onClickAction={enableCheckout}
+            disabled={!buttonOrderDisabled}
+          >
+            Order Now
+          </Button>
+        </div>
+      </div>
     </section>
   );
 };

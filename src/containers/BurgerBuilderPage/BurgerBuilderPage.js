@@ -104,29 +104,20 @@ class BurgerBuilderPage extends Component {
   };
 
   continueCheckoutHandler = () => {
-    this.setState({ loading: true });
-    const data = {
-      ingredients: this.state.ingredients,
-      price: this.state.totalPrice,
-      customer: {
-        name: 'Alin RADU',
-        address: {
-          street: 'testStreet',
-          zipCode: '550036',
-          country: 'Romania',
-        },
-        email: 'testEmail@test.com',
-      },
-      deliveryMethod: 'fastest',
-    };
-    axiosFirebase
-      .post('/orders.json', data)
-      .then((response) => {
-        this.setState({ loading: false, enableCheckout: false });
-      })
-      .catch((error) => {
-        this.setState({ loading: false, enableCheckout: false });
-      });
+    const queryParams = [];
+    for (let i in this.state.ingredients) {
+      queryParams.push(
+        encodeURIComponent(i) +
+          '=' +
+          encodeURIComponent(this.state.ingredients[i])
+      );
+    }
+    queryParams.push('price=' + this.state.totalPrice);
+    const queryString = queryParams.join('&');
+    this.props.history.push({
+      pathname: '/checkout',
+      search: '?' + queryString,
+    });
   };
 
   renderModal = (condition) => {
@@ -158,7 +149,7 @@ class BurgerBuilderPage extends Component {
     if (this.state.ingredients) {
       viewPage = (
         <Aux>
-          <BurgerView ingredients={this.state.ingredients} />
+          <BurgerView ingredients={this.state.ingredients} size={'large'} />
           <BurgerBuildControls
             buttonLessDisabled={this.enableButtonLessHandler()}
             ingAdd={this.addIngredientHandler}

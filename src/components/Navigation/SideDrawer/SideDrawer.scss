@@ -10,6 +10,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  & ul {
+    padding-top: 2rem;
+  }
 
   &.open {
     transform: translateX(0);

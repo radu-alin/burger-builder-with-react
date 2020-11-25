@@ -1,20 +1,15 @@
-import { Component, Profiler } from 'react';
+import { Component } from 'react';
+import { Route } from 'react-router-dom';
 
-import BurgerBuilderPage from './containers/BurgerBuilderPage/BurgerBuilderPage';
 import Layout from './hoc/Layout/Layout';
-
+import BurgerBuilderPage from './containers/BurgerBuilderPage/BurgerBuilderPage';
+import CheckoutPage from './containers/CheckoutPage/CheckoutPage';
 class App extends Component {
   render() {
     return (
       <Layout>
-        <Profiler
-          id="BurgerBuilderPage"
-          onRender={(id, phase, actualDuration) =>
-            console.log({ id, phase, actualDuration })
-          }
-        >
-          <BurgerBuilderPage />
-        </Profiler>
+        <Route path="/" exact component={BurgerBuilderPage} />
+        <Route path="/checkout" component={CheckoutPage} />
       </Layout>
     );
   }

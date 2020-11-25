@@ -14,7 +14,7 @@ const Sidedrawer = ({ closeSideDrawer, showSideDrawer }) => {
     <Aux>
       <Backdrop onClickAction={closeSideDrawer} show={showSideDrawer} />
       <header id="SideDrawer" className={classes}>
-        <Logo size={'side-drawer-height'} />
+        <Logo size={'small'} />
         <NavigationItems />
       </header>
     </Aux>

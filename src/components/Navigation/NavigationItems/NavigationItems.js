@@ -7,10 +7,10 @@ const NavigationItems = ({ showOnDektop }) => {
   return (
     <nav className={classes}>
       <ul id="NavigationItems" className="navigation-items">
-        <NavigationItem link="/">Burger Builder</NavigationItem>
         <NavigationItem link="/" active>
-          CheckOut
+          Burger Builder
         </NavigationItem>
+        <NavigationItem link="/">CheckOut</NavigationItem>
       </ul>
     </nav>
   );

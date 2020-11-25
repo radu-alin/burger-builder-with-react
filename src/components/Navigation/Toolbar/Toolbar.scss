@@ -3,8 +3,11 @@
   height: 56px;
   position: fixed;
   top: 0;
-  left: 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  & .mg-auto {
+    height: 100%;
+    max-width: 800px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 }

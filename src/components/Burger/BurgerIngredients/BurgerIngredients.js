@@ -20,7 +20,7 @@ const BurgerIngredients = ({ ingredients }) => {
   }
 
   return (
-    <div className="burger-ingredients mg-0-auto py-1 ">
+    <div className="burger-ingredients mg-auto py-1 ">
       <BurgerIngredient type={'bread-top'} />
       {transformedIngredients}
       <BurgerIngredient type={'bread-bottom'} />
