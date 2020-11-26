@@ -21,9 +21,9 @@ const BurgerIngredients = ({ ingredients }) => {
 
   return (
     <div className="burger-ingredients mg-auto py-1 ">
-      <BurgerIngredient type={'bread-top'} />
+      <BurgerIngredient type="bread-top" />
       {transformedIngredients}
-      <BurgerIngredient type={'bread-bottom'} />
+      <BurgerIngredient type="bread-bottom" />
     </div>
   );
 };

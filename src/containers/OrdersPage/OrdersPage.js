@@ -30,16 +30,17 @@ class OrdersPage extends Component {
       .catch((err) => this.setState({ loading: false }));
   }
 
-  renderOrders = () => {
-    let orders = <Spinner />;
-    if (!this.state.loading || this.state.orders.length !== 0) {
-      orders = <Orders orders={this.state.orders} />;
-    }
+  renderOrders = (condition) => {
+    let orders = condition ? (
+      <Spinner />
+    ) : (
+      <Orders orders={this.state.orders} />
+    );
     return orders;
   };
 
   render() {
-    return <main id="OrdersPage">{this.renderOrders()}</main>;
+    return <main id="OrdersPage">{this.renderOrders(this.state.loading)}</main>;
   }
 }
 

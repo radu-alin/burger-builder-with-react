@@ -37,6 +37,13 @@
       background-color: #99703f;
       color: white;
     }
+    &:disabled,
+    &:disabled:hover {
+      background-color: #ac9980;
+      border: 1px solid #7e7365;
+      color: #ccc;
+      cursor: not-allowed;
+    }
   }
 
   &.order {

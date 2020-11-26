@@ -12,18 +12,10 @@ const CheckoutSummary = ({ ingredients, checkoutCancel, checkoutContinue }) => {
           <h1>He hope it taste well!</h1>
           <BurgerView ingredients={ingredients} size={'small'} />
           <div className="checkout-summary-buttons">
-            <Button
-              type={'less'}
-              spacing={'my-1'}
-              onClickAction={checkoutCancel}
-            >
+            <Button type="less" spacing="my-1" onClickAction={checkoutCancel}>
               Cancel
             </Button>
-            <Button
-              type={'more'}
-              spacing={'my-1'}
-              onClickAction={checkoutContinue}
-            >
+            <Button type="more" spacing="my-1" onClickAction={checkoutContinue}>
               Continue
             </Button>
           </div>

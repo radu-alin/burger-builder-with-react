@@ -50,8 +50,8 @@ const BurgerBuildControls = ({
           <p className="p-1">Price: &#8364; {totalPrice.toFixed(2)}</p>
           {renderButtons}
           <Button
-            type={'more order'}
-            spacing={'my-1'}
+            type="more order"
+            spacing="my-1"
             onClickAction={enableCheckout}
             disabled={!buttonOrderDisabled}
           >

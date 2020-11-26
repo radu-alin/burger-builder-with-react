@@ -12,13 +12,13 @@ const BurgerBuildControl = ({
     <div classes="label">{label}</div>
     <div>
       <Button
-        type={'less'}
+        type="less"
         onClickAction={ingRemove}
         disabled={buttonLessDisabled}
       >
         Less
       </Button>
-      <Button type={'more'} onClickAction={ingAdd} disabled={false}>
+      <Button type="more" onClickAction={ingAdd} disabled={false}>
         More
       </Button>
     </div>

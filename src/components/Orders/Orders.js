@@ -4,21 +4,21 @@ import './Orders.scss';
 
 const Orders = ({ orders }) => {
   const renderOrders = () => {
+    console.log(orders.length);
+    console.log(orders);
     if (orders.length === 0) {
       return <p>Please make an Order</p>;
     }
-    if (orders !== null) {
-      return orders.map((order) => {
-        return (
-          <Order
-            key={order.id}
-            ingredients={order.ingredients}
-            totalPrice={+order.totalPrice}
-            orderDate={order.orderDate}
-          />
-        );
-      });
-    }
+    return orders.map((order) => {
+      return (
+        <Order
+          key={order.id}
+          ingredients={order.ingredients}
+          totalPrice={+order.totalPrice}
+          orderDate={order.orderDate}
+        />
+      );
+    });
   };
   return (
     <section className="bg-gray-main">

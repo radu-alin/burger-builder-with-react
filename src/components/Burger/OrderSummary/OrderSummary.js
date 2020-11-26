@@ -20,10 +20,10 @@ const OrderSummary = ({
       <ul>{renderIngredients}</ul>
       <h4 className="my-1">Total Price: &#8364; {totalPrice.toFixed(2)}</h4>
       <p>Continue to Checkout ?</p>
-      <Button type={'less order my-1'} onClickAction={cancelPurchase}>
+      <Button type="less order my-1" onClickAction={cancelPurchase}>
         CANCEL
       </Button>
-      <Button type={'more order my-1'} onClickAction={continuePurchase}>
+      <Button type="more order my-1" onClickAction={continuePurchase}>
         CONTINUE
       </Button>
     </Aux>
