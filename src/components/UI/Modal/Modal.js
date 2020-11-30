@@ -1,10 +1,7 @@
-import React from 'react';
-
+import { Fragment } from 'react';
 import ReactDom from 'react-dom';
 
 import Backdrop from '../Backdrop/Backdrop';
-
-import Aux from '../../../hoc/Aux/Aux';
 
 import './Modal.scss';
 
@@ -12,12 +9,12 @@ const Modal = ({ children, show, disableModal }) => {
   let classes = show ? 'modal show' : 'modal';
 
   return ReactDom.createPortal(
-    <Aux>
+    <Fragment>
       <Backdrop show={show} onClickAction={disableModal} />
       <div className={classes}>
         <div className="modal-content">{children}</div>
       </div>
-    </Aux>,
+    </Fragment>,
     document.getElementById('modal')
   );
 };

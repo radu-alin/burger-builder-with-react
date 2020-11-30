@@ -1,9 +1,7 @@
-import { Component } from 'react';
+import { Fragment, Component } from 'react';
 
 import Toolbar from '../../components/Navigation/Toolbar/Toolbar';
 import Sidedrawer from '../../components/Navigation/SideDrawer/SideDrawer';
-
-import Aux from '../Aux/Aux';
 
 class Layout extends Component {
   state = {
@@ -20,7 +18,7 @@ class Layout extends Component {
 
   render() {
     return (
-      <Aux>
+      <Fragment>
         <Sidedrawer
           closeSideDrawer={this.closeSideDrawerHandler}
           showSideDrawer={this.state.showSideDrawer}
@@ -28,7 +26,7 @@ class Layout extends Component {
 
         <Toolbar openSideDrawer={this.openSideDrawerHandler} />
         {this.props.children}
-      </Aux>
+      </Fragment>
     );
   }
 }

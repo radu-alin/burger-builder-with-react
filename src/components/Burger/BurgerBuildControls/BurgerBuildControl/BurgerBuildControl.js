@@ -4,7 +4,7 @@ import Button from '../../../UI/Button/Button';
 
 const BurgerBuildControl = ({
   label,
-  buttonLessDisabled,
+  lessButtonDisabled,
   ingAdd,
   ingRemove,
 }) => (
@@ -12,13 +12,13 @@ const BurgerBuildControl = ({
     <div classes="label">{label}</div>
     <div>
       <Button
-        type="less"
+        type="brown-light"
         onClickAction={ingRemove}
-        disabled={buttonLessDisabled}
+        disabled={lessButtonDisabled}
       >
         Less
       </Button>
-      <Button type="more" onClickAction={ingAdd} disabled={false}>
+      <Button type="brown-dark" onClickAction={ingAdd} disabled={false}>
         More
       </Button>
     </div>

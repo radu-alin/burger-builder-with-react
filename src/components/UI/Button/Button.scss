@@ -4,13 +4,12 @@
   margin: 0 5px;
   padding: 3px;
   font: inherit;
-  border: 1px solid #aa6817;
   border-radius: 7px;
   cursor: pointer;
   outline: none;
   text-align: center;
 
-  &.less {
+  &.brown-light {
     background-color: #d39952;
     color: white;
 
@@ -28,7 +27,7 @@
     }
   }
 
-  &.more {
+  &.brown-dark {
     background-color: #8f5e1e;
     color: white;
 
@@ -46,19 +45,11 @@
     }
   }
 
-  &.order {
+  &.big {
     width: 110px;
 
-    &:disabled,
-    &:disabled:hover {
-      background-color: #ac9980;
-      border: 1px solid #7e7365;
-      color: #ccc;
-      cursor: not-allowed;
-    }
-
     &:not(:disabled) {
-      animation: enable 0.3s linear;
+      animation: enable 0.5s linear;
     }
   }
 

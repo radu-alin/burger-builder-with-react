@@ -5,6 +5,10 @@ import './BurgerBuilControls.scss';
 
 const controls = [
   {
+    label: 'Salad',
+    type: 'salad',
+  },
+  {
     label: 'Bacon',
     type: 'bacon',
   },
@@ -16,17 +20,13 @@ const controls = [
     label: 'Meat',
     type: 'meat',
   },
-  {
-    label: 'Salad',
-    type: 'salad',
-  },
 ];
 
 const BurgerBuildControls = ({
   ingAdd,
   ingRemove,
-  buttonLessDisabled,
-  buttonOrderDisabled,
+  lessButtonDisabled,
+  orderNowButtonDisabled,
   totalPrice,
   enableCheckout,
 }) => {
@@ -35,7 +35,7 @@ const BurgerBuildControls = ({
       <BurgerBuildControl
         key={control.type}
         label={control.label}
-        buttonLessDisabled={buttonLessDisabled[control.type]}
+        lessButtonDisabled={lessButtonDisabled[control.type]}
         ingRemove={() => ingRemove(control.type)}
         ingAdd={() => ingAdd(control.type)}
         totalPrice={totalPrice}
@@ -45,15 +45,15 @@ const BurgerBuildControls = ({
 
   return (
     <section id="BurgerBuildControls" className="bg-brown-main">
-      <div className="container py-2">
+      <div className="container py-2 ">
         <div className="build-controls mg-auto">
           <p className="p-1">Price: &#8364; {totalPrice.toFixed(2)}</p>
           {renderButtons}
           <Button
-            type="more order"
+            type="brown-dark big"
             spacing="my-1"
             onClickAction={enableCheckout}
-            disabled={!buttonOrderDisabled}
+            disabled={!orderNowButtonDisabled}
           >
             Order Now
           </Button>

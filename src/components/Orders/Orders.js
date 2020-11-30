@@ -4,8 +4,6 @@ import './Orders.scss';
 
 const Orders = ({ orders }) => {
   const renderOrders = () => {
-    console.log(orders.length);
-    console.log(orders);
     if (orders.length === 0) {
       return <p>Please make an Order</p>;
     }
@@ -21,7 +19,7 @@ const Orders = ({ orders }) => {
     });
   };
   return (
-    <section className="bg-gray-main">
+    <section id="Orders">
       <div className="container py-1">
         <div className="orders">
           <h3>Your Orders:</h3>

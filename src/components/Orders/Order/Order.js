@@ -17,7 +17,7 @@ const Order = ({ ingredients, totalPrice, orderDate }) => {
   ));
 
   return (
-    <div id="Order" className="order bg-brown-main">
+    <div id="Order" className="order bg-brown-main my-1">
       <p>
         <strong>Date: </strong>
         {orderDate}

@@ -11,7 +11,7 @@ $color-gray-main: #c9c9c9;
 
 body {
   font-family: 'Open Sans', sans-serif;
-  background: $color-brown-main;
+  overflow: auto;
 }
 
 p {
@@ -21,6 +21,9 @@ p {
 a {
   color: #fff;
   text-decoration: none;
+}
+html {
+  background-color: $color-gray-main;
 }
 
 //Utilities
@@ -33,7 +36,6 @@ a {
 .flexyx-center {
   display: flex;
   width: 100%;
-  height: 100%;
   justify-content: center;
   align-items: center;
 }

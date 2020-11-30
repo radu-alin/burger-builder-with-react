@@ -1,6 +1,6 @@
-import Button from '../../UI/Button/Button';
+import { Fragment } from 'react';
 
-import Aux from '../../../hoc/Aux/Aux';
+import Button from '../../UI/Button/Button';
 
 const OrderSummary = ({
   ingredients,
@@ -14,19 +14,19 @@ const OrderSummary = ({
     </li>
   ));
   return (
-    <Aux>
+    <Fragment>
       <h3>Your Order</h3>
       <p>A delicious burger with following ingredients:</p>
       <ul>{renderIngredients}</ul>
       <h4 className="my-1">Total Price: &#8364; {totalPrice.toFixed(2)}</h4>
       <p>Continue to Checkout ?</p>
-      <Button type="less order my-1" onClickAction={cancelPurchase}>
+      <Button type="brown-light big my-1" onClickAction={cancelPurchase}>
         CANCEL
       </Button>
-      <Button type="more order my-1" onClickAction={continuePurchase}>
+      <Button type="brown-dark big my-1" onClickAction={continuePurchase}>
         CONTINUE
       </Button>
-    </Aux>
+    </Fragment>
   );
 };
 

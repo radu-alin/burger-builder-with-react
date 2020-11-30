@@ -6,13 +6,13 @@ const Input = ({
   value,
   onChangeAction,
   shouldValidate,
-  touched,
+  isTouched,
   isValid,
   ...elementConfig
 }) => {
   let inputElement = null;
   let classes = 'input-element';
-  if (!isValid && shouldValidate && touched) {
+  if (!isValid && shouldValidate && isTouched) {
     classes = 'input-element invalid';
   }
 

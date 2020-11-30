@@ -1,29 +1,28 @@
-import { Component } from 'react';
+import React, { Component } from 'react';
 
 import Modal from '../../components/UI/Modal/Modal';
-
-import Aux from '../Aux/Aux';
 
 const withErrorHandler = (WrappedComponent, axios) =>
   class extends Component {
     constructor() {
       super();
       this.state = {
-        error: null,
+        isError: false,
+        errorMsg: null,
       };
 
       this.axiosErrorHandler();
     }
 
     axiosErrorHandler = () => {
-      this.reqInterceptor = axios.interceptors.request.use((req) => {
-        this.setState({ error: null });
-        return req;
-      });
+      this.reqInterceptor = axios.interceptors.request.use(
+        (req) => req,
+        (err) => this.setState({ isError: true, errorMsg: err.message })
+      );
       this.resInterceptor = axios.interceptors.response.use(
         (res) => res,
-        (error) => {
-          this.setState({ error: error });
+        (err) => {
+          this.setState({ isError: true, errorMsg: err.message });
         }
       );
     };
@@ -34,20 +33,22 @@ const withErrorHandler = (WrappedComponent, axios) =>
     }
 
     errorConfirmHandler = () => {
-      this.setState({ error: null });
+      this.setState({ isError: false, errorMsg: null });
     };
 
     render() {
       return (
-        <Aux>
-          <Modal
-            show={this.state.error}
-            disableModal={this.errorConfirmHandler}
-          >
-            {this.state.error ? this.state.error.message : null}
-          </Modal>
+        <React.Fragment>
+          {this.state.isError ? (
+            <Modal
+              show={this.state.isError}
+              disableModal={this.errorConfirmHandler}
+            >
+              {this.state.errorMsg}
+            </Modal>
+          ) : null}
           <WrappedComponent {...this.props} />
-        </Aux>
+        </React.Fragment>
       );
     }
   };

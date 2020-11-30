@@ -2,7 +2,7 @@ import './Button.scss';
 
 const Button = ({ children, type, spacing, onClickAction, disabled }) => {
   let classes = '';
-  //type options: less, order, more order
+  //type options: brown-light, brown-dark +  big
   classes = `btn ${type}`;
 
   //spacing options: my-1

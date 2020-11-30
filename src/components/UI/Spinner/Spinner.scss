@@ -21,6 +21,10 @@
   -webkit-transform: translateZ(0);
   -ms-transform: translateZ(0);
   transform: translateZ(0);
+
+  &.center {
+    margin-top: 200px;
+  }
 }
 .loader:before {
   width: 50%;

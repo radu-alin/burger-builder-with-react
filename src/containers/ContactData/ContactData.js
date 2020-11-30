@@ -1,106 +1,22 @@
-import { Component } from 'react';
+import { Fragment, Component } from 'react';
+import { connect } from 'react-redux';
+
+import { state } from './state';
 
 import Input from '../../components/UI/Input/Input';
 import Button from '../../components/UI/Button/Button';
 import Spinner from '../../components/UI/Spinner/Spinner';
 
-import axiosFirebase from '../../axios-orders';
+import { checkValidity } from '../../utility/utility';
+import { axiosFirebase } from '../../axios-orders';
+import withErrorHandler from '../../hoc/withtErrorHandler/withErrorHandler';
+
+import { purchaseBurger } from '../../redux/actions';
 
 import './ContactData.scss';
 
 class ContactDataPage extends Component {
-  state = {
-    orderForm: {
-      name: {
-        label: 'Name',
-        elementType: 'input',
-        value: '',
-        elementConfig: {
-          type: 'text',
-          placeholder: 'Your Name',
-        },
-        validation: {
-          required: 'true',
-        },
-        valid: false,
-        touched: false,
-      },
-      email: {
-        label: 'E-mail',
-        elementType: 'input',
-        value: '',
-        elementConfig: {
-          type: 'email',
-          placeholder: 'Your E-Mail',
-        },
-        validation: {
-          required: 'true',
-        },
-        valid: false,
-        touched: false,
-      },
-      street: {
-        label: 'Street',
-        elementType: 'input',
-        value: '',
-        elementConfig: {
-          type: 'text',
-          placeholder: 'Street',
-        },
-        validation: {
-          required: 'true',
-        },
-        valid: false,
-        touched: false,
-      },
-      postalCode: {
-        label: 'Postal Code',
-        elementType: 'input',
-        value: '',
-        elementConfig: {
-          type: 'text',
-          placeholder: 'Postal Code',
-        },
-        validation: {
-          required: 'true',
-          minLength: 5,
-          maxLength: 5,
-        },
-        valid: false,
-        touched: false,
-      },
-      deliveryMethod: {
-        label: 'Delivery method',
-        elementType: 'select',
-        value: 'cheapest',
-        validation: {},
-        valid: true,
-        elementConfig: {
-          options: [
-            { value: 'cheapest', displayValue: 'Cheapest' },
-            { value: 'fastest', displayValue: 'Fastest' },
-          ],
-          placeholder: 'Delivery Method',
-        },
-      },
-    },
-    formIsValid: false,
-    loading: false,
-  };
-
-  checkValidity = (value, rules) => {
-    let isValid = true;
-    if (rules.required) {
-      isValid = value.trim() !== '' && isValid;
-    }
-    if (rules.minLength) {
-      isValid = value.length >= rules.minLength && isValid;
-    }
-    if (rules.maxLength) {
-      isValid = value.length <= rules.maxLength && isValid;
-    }
-    return isValid;
-  };
+  state = state;
 
   formDataHandler = (data) => {
     const customerData = {};
@@ -112,32 +28,22 @@ class ContactDataPage extends Component {
 
   orderHandler = (event) => {
     event.preventDefault();
-    this.setState({ loading: true });
     const date = new Date();
-    const data = {
+    const orderData = {
       customer: this.formDataHandler(this.state.orderForm),
       ingredients: this.props.ingredients,
       totalPrice: this.props.totalPrice,
       orderDate: date.toLocaleString(),
     };
-    axiosFirebase
-      .post('/orders.json', data)
-      .then((response) => {
-        this.setState({ loading: false });
-        this.props.history.push('/');
-      })
-      .catch((error) => {
-        this.setState({ loading: false });
-      });
+    this.props.onPurchaseBurger(orderData);
   };
-  /////////////////////////////////////////////////////////////////////////////
 
-  formIsValidHandler = (data) => {
-    let formIsValid = true;
+  isFormValidHandler = (data) => {
+    let isFormValid = true;
     for (let key in data) {
-      formIsValid = data[key].valid && formIsValid;
+      isFormValid = data[key].isValid && isFormValid;
     }
-    return formIsValid;
+    return isFormValid;
   };
 
   inputChangedHandler = (event, inputId) => {
@@ -148,18 +54,18 @@ class ContactDataPage extends Component {
       ...updatedOrderForm[inputId],
     };
     updatedFormEl.value = event.target.value;
-    updatedFormEl.touched = true;
-    updatedFormEl.valid = this.checkValidity(
+    updatedFormEl.isTouched = true;
+    updatedFormEl.isValid = checkValidity(
       updatedFormEl.value,
       updatedFormEl.validation
     );
     updatedOrderForm[inputId] = updatedFormEl;
 
-    const formIsValid = this.formIsValidHandler(updatedOrderForm);
+    const isFormValid = this.isFormValidHandler(updatedOrderForm);
 
-    this.setState({ orderForm: updatedOrderForm, formIsValid: formIsValid });
+    this.setState({ orderForm: updatedOrderForm, isFormValid });
   };
-  ////////////////////////////////////////////////udemy238
+
   renderInputs = (data) => {
     const formElementsArray = [];
     for (let key in data) {
@@ -168,6 +74,7 @@ class ContactDataPage extends Component {
         config: data[key],
       });
     }
+
     const inputs = formElementsArray.map((formEl) => {
       return (
         <Input
@@ -175,8 +82,8 @@ class ContactDataPage extends Component {
           label={formEl.config.label}
           elementType={formEl.config.elementType}
           value={formEl.config.value}
-          touched={formEl.config.touched}
-          isValid={formEl.config.valid}
+          isTouched={formEl.config.isTouched}
+          isValid={formEl.config.isValid}
           shouldValidate={formEl.config.validation}
           onChangeAction={(event) => this.inputChangedHandler(event, formEl.id)}
           {...formEl.config.elementConfig}
@@ -189,31 +96,100 @@ class ContactDataPage extends Component {
 
   renderForm = () => {
     let form = (
-      <form onSubmit={this.orderHandler}>
-        {this.renderInputs(this.state.orderForm)}
-        <Button type="more" spacing="my-1" disabled={!this.state.formIsValid}>
-          Order
-        </Button>
-      </form>
+      <Fragment>
+        <h3>Enter You Contact Data</h3>
+        <div className="flexyx-center py-1">
+          <form onSubmit={this.orderHandler}>
+            {this.renderInputs(this.state.orderForm)}
+            <Button
+              type="brown-dark big"
+              spacing="my-1"
+              disabled={!this.state.isFormValid}
+            >
+              Order
+            </Button>
+          </form>
+        </div>
+      </Fragment>
     );
-    if (this.state.loading) {
+
+    if (this.props.isLoading) {
       form = <Spinner />;
     }
     return form;
   };
 
-  render() {
+  renderFormSubmittedResponse = () => {
+    const onClickAction = () => {
+      this.props.history.replace('/');
+    };
+
+    let response = (
+      <div className="contact-data-submitted">
+        <h3>Your order has been sent successfully</h3>
+        <Button
+          type="brown-dark big "
+          spacing="py-1"
+          onClickAction={onClickAction}
+        >
+          Main Page
+        </Button>
+      </div>
+    );
+
+    if (this.props.isError) {
+      response = (
+        <div className="contact-data-submitted">
+          <h3>An error occurred</h3>
+          <p>Please make a new order</p>
+          <Button
+            type="brown-dark big "
+            spacing="py-1"
+            onClickAction={onClickAction}
+          >
+            Main Page
+          </Button>
+        </div>
+      );
+    }
+    return response;
+  };
+
+  renderContactData = () => {
     return (
-      <section id="ContactPage">
+      <section id="ContactPage" className="bg-brown-main">
         <div className="container py-2">
           <div className="contact-data py-2 mg-auto bg-gray-main">
-            <h3>Enter You Contact Data</h3>
-            <div className="flexyx-center py-1">{this.renderForm()}</div>
+            {!this.props.isSubmitted
+              ? this.renderForm()
+              : this.renderFormSubmittedResponse()}
           </div>
         </div>
       </section>
     );
+  };
+
+  render() {
+    return <Fragment>{this.renderContactData()}</Fragment>;
   }
 }
 
-export default ContactDataPage;
+const mapStateToProps = ({
+  burger: { ingredients, totalPrice },
+  checkout: { isLoading, isSubmitted, isError },
+}) => ({
+  ingredients,
+  totalPrice,
+  isLoading,
+  isSubmitted,
+  isError,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  onPurchaseBurger: (orderData) => dispatch(purchaseBurger(orderData)),
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withErrorHandler(ContactDataPage, axiosFirebase));
