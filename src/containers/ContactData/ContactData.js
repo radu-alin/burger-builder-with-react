@@ -22,6 +22,7 @@ const ContactDataPage = ({
   isSubmitted,
   isError,
   token,
+  userId,
   history,
   onPurchaseBurger,
 }) => {
@@ -31,21 +32,22 @@ const ContactDataPage = ({
     event.preventDefault();
     const date = new Date();
     const orderData = {
-      customer: formInputsDataHandler(formData.formInputsData),
+      orderData: formInputsDataHandler(formData.formInputsData),
       ingredients: ingredients,
       totalPrice: totalPrice,
       orderDate: date.toLocaleString(),
+      userId: userId,
     };
     onPurchaseBurger(orderData, token);
   };
 
   const formInputsDataHandler = (data) => {
-    const customerData = {};
+    const orderData = {};
     for (let key in data) {
-      customerData[key] = data[key].value;
+      orderData[key] = data[key].value;
     }
 
-    return customerData;
+    return orderData;
   };
 
   const renderForm = () => {
@@ -118,7 +120,7 @@ const ContactDataPage = ({
 const mapStateToProps = ({
   burger: { ingredients, totalPrice },
   checkout: { isLoading, isSubmitted, isError },
-  auth: { token },
+  auth: { token, userId },
 }) => ({
   ingredients,
   totalPrice,
@@ -126,6 +128,7 @@ const mapStateToProps = ({
   isSubmitted,
   isError,
   token,
+  userId,
 });
 
 const mapDispatchToProps = (dispatch) => ({

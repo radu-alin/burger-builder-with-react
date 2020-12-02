@@ -1,4 +1,5 @@
-import { Route } from 'react-router-dom';
+import { Fragment } from 'react';
+import { Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import Layout from './hoc/Layout/Layout';
@@ -10,21 +11,36 @@ import Logout from './containers/AuthPage/Logout/Logout';
 
 import { authCheckValidity } from './redux/actions/index';
 
-const App = ({ onAuthCheckValidity }) => {
+const App = ({ isAuth, onAuthCheckValidity }) => {
   onAuthCheckValidity();
-  return (
-    <Layout>
-      <Route path="/" exact component={BurgerBuilderPage} />
-      <Route path="/checkout" component={CheckoutPage} />
-      <Route path="/orders" component={OrdersPage} />
+  let routes = (
+    <Fragment>
       <Route path="/auth" component={AuthPage} />
-      <Route path="/logout" component={Logout} />
-    </Layout>
+      <Route path="/" exact component={BurgerBuilderPage} />
+      <Redirect to="/" />
+    </Fragment>
   );
+
+  if (isAuth) {
+    routes = (
+      <Fragment>
+        <Route path="/checkout" component={CheckoutPage} />
+        <Route path="/orders" component={OrdersPage} />
+        <Route path="/logout" component={Logout} />
+        <Route path="/auth" component={AuthPage} />
+        <Route path="/" exact component={BurgerBuilderPage} />
+      </Fragment>
+    );
+  }
+  return <Layout>{routes}</Layout>;
 };
+
+const mapStateToProps = ({ auth: { token } }) => ({
+  isAuth: !!token,
+});
 
 const mapDispatchToProps = (dispatch) => ({
   onAuthCheckValidity: () => dispatch(authCheckValidity()),
 });
 
-export default connect(null, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);

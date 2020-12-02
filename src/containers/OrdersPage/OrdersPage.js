@@ -16,11 +16,12 @@ const OrdersPage = ({
   isLoading,
   isError,
   token,
+  userId,
   onFetchOrders,
   onResetSpinner,
 }) => {
   useEffect(() => {
-    onFetchOrders(token);
+    onFetchOrders(token, userId);
     return () => onResetSpinner();
   }, [onFetchOrders, onResetSpinner, token]);
 
@@ -43,16 +44,17 @@ const OrdersPage = ({
 
 const mapStateToProps = ({
   orders: { orders, isLoading, isError },
-  auth: { token },
+  auth: { token, userId },
 }) => ({
   orders,
   isLoading,
   isError,
   token,
+  userId,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onFetchOrders: (token) => dispatch(fetchOrders(token)),
+  onFetchOrders: (token, userId) => dispatch(fetchOrders(token, userId)),
   onResetSpinner: () => dispatch(fetchOrdersResetSpinner()),
 });
 

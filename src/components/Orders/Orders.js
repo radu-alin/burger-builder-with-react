@@ -5,7 +5,7 @@ import './Orders.scss';
 const Orders = ({ orders }) => {
   const renderOrders = () => {
     if (orders.length === 0) {
-      return <p>Please make an Order</p>;
+      return <p>You don't have any orders. Please make an Order</p>;
     }
     return orders.map((order) => {
       return (

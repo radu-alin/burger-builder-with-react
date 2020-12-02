@@ -14,7 +14,7 @@ export const fetchOrdersFail = () => ({
   type: actionTypes.FETCH_ORDERS_FAIL,
 });
 
-export const fetchOrders = (token) => async (dispatch) => {
+export const fetchOrders = (token, userId) => async (dispatch) => {
   const dataArray = [];
   const transformData = (data) => {
     for (let key in data) {
@@ -23,7 +23,9 @@ export const fetchOrders = (token) => async (dispatch) => {
     return dataArray;
   };
   try {
-    const response = await axiosFirebaseData.get('/orders.json?auth=' + token);
+    const queryParams =
+      '?auth=' + token + '&orderBy="userId"&equalTo="' + userId + '"';
+    const response = await axiosFirebaseData.get('/orders.json' + queryParams);
     transformData(response.data);
     dispatch(fetchOrdersSuccess(dataArray));
   } catch (err) {
