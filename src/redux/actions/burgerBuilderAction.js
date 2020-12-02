@@ -1,5 +1,5 @@
 import * as actionTypes from './actionTypes';
-import { axiosFirebase } from '../../axios-orders';
+import { axiosFirebaseData } from '../../axios-instance';
 
 export const addIngredient = (ing) => ({
   type: actionTypes.ADD_INGREDIENT,
@@ -20,9 +20,11 @@ export const fetchIngredientsFail = () => ({
   type: actionTypes.FETCH_INGREDIENTS_FAIL,
 });
 
-export const fetchIngredients = () => (dispatch) => {
-  axiosFirebase
-    .get('/ingredients.json')
-    .then((res) => dispatch(fetchIngredientsSuccess(res.data)))
-    .catch((err) => dispatch(fetchIngredientsFail()));
+export const fetchIngredients = () => async (dispatch) => {
+  try {
+    const response = await axiosFirebaseData.get('/ingredients.json');
+    dispatch(fetchIngredientsSuccess(response.data));
+  } catch (err) {
+    dispatch(fetchIngredientsFail());
+  }
 };

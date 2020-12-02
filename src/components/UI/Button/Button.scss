@@ -47,15 +47,15 @@
 
   &.big {
     width: 110px;
+    padding: 10px;
 
     &:not(:disabled) {
       animation: enable 0.5s linear;
     }
   }
 
-  &.my-1 {
-    margin: 1rem 1rem;
-    padding: 10px;
+  &.full {
+    width: 100%;
   }
 
   @keyframes enable {

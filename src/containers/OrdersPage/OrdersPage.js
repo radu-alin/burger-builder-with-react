@@ -4,19 +4,21 @@ import { connect } from 'react-redux';
 import Orders from '../../components/Orders/Orders';
 import Spinner from '../../components/UI/Spinner/Spinner';
 
-import { axiosFirebase } from '../../axios-orders';
+import { axiosFirebaseData } from '../../axios-instance';
 import withErrorHandler from '../../hoc/withtErrorHandler/withErrorHandler';
 import { fetchOrders } from '../../redux/actions/index';
 
-const OrdersPage = ({ orders, isLoading, isError, onFetchOrders }) => {
-  useEffect(() => onFetchOrders(), [onFetchOrders]);
+const OrdersPage = ({ orders, isLoading, isError, token, onFetchOrders }) => {
+  useEffect(() => onFetchOrders(token), [onFetchOrders, token]);
 
   const renderOrdersPage = () => {
     let renderOrders = isLoading && <Spinner center />;
-    if (!isLoading) {
-      return (renderOrders = !isError ? <Orders orders={orders} /> : null);
+    if (!isLoading || orders) {
+      renderOrders = <Orders orders={orders} />;
     }
-
+    if (!isLoading && isError) {
+      renderOrders = null;
+    }
     return renderOrders;
   };
   return (
@@ -27,18 +29,20 @@ const OrdersPage = ({ orders, isLoading, isError, onFetchOrders }) => {
 };
 
 const mapStateToProps = ({
-  orders: { orders, isLoading, isError, errorMsg },
+  orders: { orders, isLoading, isError },
+  auth: { token },
 }) => ({
   orders,
   isLoading,
   isError,
+  token,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onFetchOrders: () => dispatch(fetchOrders()),
+  onFetchOrders: (token) => dispatch(fetchOrders(token)),
 });
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withErrorHandler(OrdersPage, axiosFirebase));
+)(withErrorHandler(OrdersPage, axiosFirebaseData));

@@ -19,15 +19,15 @@ const CheckoutSummary = ({
           <h4>Total Price: &#8364; {totalPrice.toFixed(2)}</h4>
           <div className="checkout-summary-buttons">
             <Button
-              type="brown-light"
-              spacing="my-1"
+              type="brown-light big"
+              spacing="m-1"
               onClickAction={checkoutCancel}
             >
               Cancel
             </Button>
             <Button
-              type="brown-dark"
-              spacing="my-1"
+              type="brown-dark big"
+              spacing="m-1"
               onClickAction={checkoutContinue}
             >
               Continue

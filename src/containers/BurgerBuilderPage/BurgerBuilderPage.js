@@ -9,7 +9,7 @@ import Modal from '../../components/UI/Modal/Modal';
 import Spinner from '../../components/UI/Spinner/Spinner';
 
 import withErrorHandler from '../../hoc/withtErrorHandler/withErrorHandler';
-import { axiosFirebase } from '../../axios-orders';
+import { axiosFirebaseData } from '../../axios-instance';
 import {
   addIngredient,
   removeIngredient,
@@ -101,6 +101,7 @@ class BurgerBuilderPage extends Component {
 
 const mapStateTopPros = ({
   burger: { ingredients, totalPrice, isLoading, isError },
+  auth: { token },
 }) => ({
   ingredients,
   totalPrice,
@@ -117,4 +118,4 @@ const mapDispatchToProps = (dispach) => ({
 export default connect(
   mapStateTopPros,
   mapDispatchToProps
-)(withErrorHandler(BurgerBuilderPage, axiosFirebase));
+)(withErrorHandler(BurgerBuilderPage, axiosFirebaseData));

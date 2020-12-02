@@ -17,6 +17,7 @@ export const ordersReducer = (state = initialState, action) => {
         ...state,
         orders: action.payload,
         isLoading: false,
+        isError: false,
       };
     case actionTypes.FETCH_ORDERS_FAIL:
       return {

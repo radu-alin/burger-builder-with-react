@@ -7,3 +7,5 @@ export {
 export { purchaseBurger, purchaseBurgerInit } from './checkoutAction';
 
 export { fetchOrders } from './ordersAction';
+
+export { auth } from './authAction';

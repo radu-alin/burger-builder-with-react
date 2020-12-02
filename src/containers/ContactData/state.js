@@ -1,5 +1,5 @@
-export const state = {
-  orderForm: {
+export const defaultState = {
+  formInputsData: {
     name: {
       label: 'Name',
       elementType: 'input',
@@ -75,5 +75,5 @@ export const state = {
       },
     },
   },
-  isFormValid: true,
+  isValidForm: false,
 };

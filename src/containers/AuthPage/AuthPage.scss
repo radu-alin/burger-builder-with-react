@@ -1,0 +1,24 @@
+.auth-form {
+  width: 320px;
+  min-height: 450px;
+  margin: 56px auto 0 auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  & form {
+    width: 90%;
+    padding: 1rem;
+  }
+
+  & p {
+    background: red;
+  }
+
+  & .buttons {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+  }
+}

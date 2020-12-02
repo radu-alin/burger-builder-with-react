@@ -7,14 +7,16 @@
   & a {
     height: 100%;
     width: 100%;
+    min-width: 120px;
     padding: 16px 10px;
+    text-align: center;
     border-bottom: 7px solid transparent;
 
     &:hover,
     &:active,
     &.active {
       background: #99703f;
-      border-radius: 9px;
+      // border-radius: 9px;
       border-bottom: 7px solid #ac9980;
     }
   }

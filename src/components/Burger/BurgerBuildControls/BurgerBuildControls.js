@@ -44,7 +44,10 @@ const BurgerBuildControls = ({
   });
 
   return (
-    <section id="BurgerBuildControls" className="bg-brown-main">
+    <section
+      id="BurgerBuildControls"
+      className="burger-build-controls bg-brown-main"
+    >
       <div className="container py-2 ">
         <div className="build-controls mg-auto">
           <p className="p-1">Price: &#8364; {totalPrice.toFixed(2)}</p>

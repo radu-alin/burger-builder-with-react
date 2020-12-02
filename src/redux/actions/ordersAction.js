@@ -1,5 +1,5 @@
 import * as actionTypes from './actionTypes';
-import { axiosFirebase } from '../../axios-orders';
+import { axiosFirebaseData } from '../../axios-instance';
 
 export const fetchOrdersStart = () => ({
   type: actionTypes.FETCH_ORDERS_START,
@@ -14,7 +14,7 @@ export const fetchOrdersFail = () => ({
   type: actionTypes.FETCH_ORDERS_FAIL,
 });
 
-export const fetchOrders = () => (dispatch) => {
+export const fetchOrders = (token) => async (dispatch) => {
   const dataArray = [];
   const transformData = (data) => {
     for (let key in data) {
@@ -22,14 +22,11 @@ export const fetchOrders = () => (dispatch) => {
     }
     return dataArray;
   };
-  axiosFirebase
-    .get('/orders.json')
-    .then((res) => {
-      transformData(res.data);
-      dispatch(fetchOrdersSuccess(dataArray));
-    })
-    .catch((err) => {
-      console.log(err);
-      dispatch(fetchOrdersFail());
-    });
+  try {
+    const response = await axiosFirebaseData.get('/orders.json?auth=' + token);
+    transformData(response.data);
+    dispatch(fetchOrdersSuccess(dataArray));
+  } catch (err) {
+    dispatch(fetchOrdersFail());
+  }
 };

@@ -9,6 +9,7 @@ const NavigationItems = ({ showOnDektop }) => {
       <ul id="NavigationItems" className="navigation-items">
         <NavigationItem link="/">Burger Builder</NavigationItem>
         <NavigationItem link="/orders">Orders</NavigationItem>
+        <NavigationItem link="/auth">Authenticate</NavigationItem>
       </ul>
     </nav>
   );
