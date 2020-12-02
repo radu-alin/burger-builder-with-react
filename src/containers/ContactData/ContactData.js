@@ -27,8 +27,6 @@ const ContactDataPage = ({
 }) => {
   const [formData, setFormData] = useState({ ...defaultState });
 
-  console.log('token - ', token);
-
   const onSubmitHandler = (event) => {
     event.preventDefault();
     const date = new Date();

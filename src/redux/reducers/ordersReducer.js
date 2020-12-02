@@ -8,7 +8,7 @@ const initialState = {
 
 export const ordersReducer = (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.FETCH_ORDERS_START:
+    case actionTypes.FETCH_ORDERS_RESET_SPINNER:
       return {
         isLoading: true,
       };

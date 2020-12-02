@@ -3,6 +3,7 @@ import * as actionTypes from '../actions/actionTypes';
 const initialState = {
   ingredients: null,
   totalPrice: 4,
+  isBuilding: false,
   isLoading: true,
   isError: false,
 };
@@ -24,6 +25,7 @@ export const burgerBuilderReducer = (state = initialState, action) => {
           [action.payload]: state.ingredients[action.payload] + 1,
         },
         totalPrice: state.totalPrice + INGREDIENT_PRICES[action.payload],
+        isBuilding: true,
       };
     case actionTypes.REMOVE_INGREDIENT:
       return {
@@ -33,6 +35,7 @@ export const burgerBuilderReducer = (state = initialState, action) => {
           [action.payload]: state.ingredients[action.payload] - 1,
         },
         totalPrice: state.totalPrice - INGREDIENT_PRICES[action.payload],
+        isBuilding: true,
       };
     case actionTypes.FETCH_INGREDIENTS_SUCCESS:
       return {
@@ -44,6 +47,7 @@ export const burgerBuilderReducer = (state = initialState, action) => {
           meat: action.payload.meat,
         },
         totalPrice: 4,
+        isBuilding: false,
         isLoading: false,
         isError: false,
       };

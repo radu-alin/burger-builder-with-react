@@ -1,5 +1,6 @@
 import { useState, Fragment } from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
 import Input from '../../components/UI/Input/Input';
 import Button from '../../components/UI/Button/Button';
@@ -11,7 +12,7 @@ import { auth } from '../../redux/actions/index';
 
 import './AuthPage.scss';
 
-const AuthPage = ({ isLoading, isError, onAuth }) => {
+const AuthPage = ({ isAuth, isLoading, isError, isBuilding, onAuth }) => {
   const [formData, setFormData] = useState({ ...defaultState });
   const [isNewAccount, setIsNewAccount] = useState(defaultState.isNewAccount);
 
@@ -64,6 +65,10 @@ const AuthPage = ({ isLoading, isError, onAuth }) => {
       form = <Spinner center />;
     }
 
+    if (isAuth) {
+      form = isBuilding ? <Redirect to="/checkout" /> : <Redirect to="/" />;
+    }
+
     return form;
   };
 
@@ -72,9 +77,14 @@ const AuthPage = ({ isLoading, isError, onAuth }) => {
   return <main id="AuthPage">{renderForm()}</main>;
 };
 
-const mapStateToProps = ({ auth: { isLoading, isError } }) => ({
+const mapStateToProps = ({
+  auth: { token, isLoading, isError },
+  burger: { isBuilding },
+}) => ({
   isError,
   isLoading,
+  isAuth: !!token,
+  isBuilding,
 });
 
 const mapDispatchToProps = (dispatch) => ({

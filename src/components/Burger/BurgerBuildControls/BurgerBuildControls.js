@@ -29,6 +29,7 @@ const BurgerBuildControls = ({
   orderNowButtonDisabled,
   totalPrice,
   enableCheckout,
+  isAuth,
 }) => {
   const renderButtons = controls.map((control) => {
     return (
@@ -58,7 +59,7 @@ const BurgerBuildControls = ({
             onClickAction={enableCheckout}
             disabled={!orderNowButtonDisabled}
           >
-            Order Now
+            {isAuth ? 'Order Now' : 'Authenticate to Order'}
           </Button>
         </div>
       </div>

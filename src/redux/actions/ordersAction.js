@@ -1,8 +1,8 @@
 import * as actionTypes from './actionTypes';
 import { axiosFirebaseData } from '../../axios-instance';
 
-export const fetchOrdersStart = () => ({
-  type: actionTypes.FETCH_ORDERS_START,
+export const fetchOrdersResetSpinner = () => ({
+  type: actionTypes.FETCH_ORDERS_RESET_SPINNER,
 });
 
 export const fetchOrdersSuccess = (data) => ({

@@ -4,12 +4,12 @@ import DrawerToogle from '../DrawerToggle/DrawerToggle';
 
 import './Toolbar.scss';
 
-const Toolbar = ({ openSideDrawer }) => (
+const Toolbar = ({ isAuth, openSideDrawer }) => (
   <header id="Toolbar" className="toolbar px-1 bg-brown-dark">
     <div className="mg-auto">
       <DrawerToogle onClickAction={openSideDrawer} />
       <Logo size={'large'} />
-      <NavigationItems showOnDektop />
+      <NavigationItems showOnDektop isAuth={isAuth} />
     </div>
   </header>
 );

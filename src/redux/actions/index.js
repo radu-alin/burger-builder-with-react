@@ -6,6 +6,6 @@ export {
 
 export { purchaseBurger, purchaseBurgerInit } from './checkoutAction';
 
-export { fetchOrders } from './ordersAction';
+export { fetchOrders, fetchOrdersResetSpinner } from './ordersAction';
 
-export { auth } from './authAction';
+export { auth, authLogout } from './authAction';

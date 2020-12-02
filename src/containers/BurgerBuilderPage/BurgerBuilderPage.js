@@ -40,7 +40,11 @@ class BurgerBuilderPage extends Component {
   };
 
   enableCheckoutHandler = () => {
-    this.setState({ isEnableCheckout: true });
+    if (this.props.isAuth) {
+      this.setState({ isEnableCheckout: true });
+    } else {
+      this.props.history.push('/auth');
+    }
   };
 
   disableCheckoutHandler = () => {
@@ -82,6 +86,7 @@ class BurgerBuilderPage extends Component {
             )}
             totalPrice={this.props.totalPrice}
             enableCheckout={this.enableCheckoutHandler}
+            isAuth={this.props.isAuth}
           />
         </Fragment>
       ) : null;
@@ -90,6 +95,7 @@ class BurgerBuilderPage extends Component {
   };
 
   render() {
+    console.log('[BurgerBuilderPage] - render()');
     return (
       <main id="BurgerBuilderPage">
         {this.renderBugerBuilderPage()}
@@ -107,6 +113,7 @@ const mapStateTopPros = ({
   totalPrice,
   isLoading,
   isError,
+  isAuth: !!token,
 });
 
 const mapDispatchToProps = (dispach) => ({
