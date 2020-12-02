@@ -15,14 +15,38 @@ export const authFail = (error) => ({
   payload: error,
 });
 
-export const authLogout = () => ({
-  type: actionTypes.AUTH_LOGOUT,
-});
+export const authLogout = () => {
+  localStorage.removeItem('token');
+  localStorage.removeItem('expirationDate');
+  localStorage.removeItem('localId');
+  return {
+    type: actionTypes.AUTH_LOGOUT,
+  };
+};
 
-export const authCheckTimeout = (expirationTime) => (dispatch) => {
+export const authLogoutTimeout = (expirationTime) => (dispatch) => {
   setTimeout(() => {
     dispatch(authLogout());
   }, expirationTime * 1000);
+};
+
+export const authCheckValidity = () => (dispatch) => {
+  const idToken = localStorage.getItem('token');
+  if (!idToken) {
+    dispatch(authLogout());
+  } else {
+    const expirationDate = new Date(localStorage.getItem('expirationDate'));
+    if (expirationDate > new Date()) {
+      const localId = localStorage.getItem('localId');
+
+      dispatch(authSuccess({ idToken, localId }));
+      dispatch(
+        authLogoutTimeout(
+          (expirationDate.getTime() - new Date().getTime()) / 1000
+        )
+      );
+    }
+  }
 };
 
 export const auth = (email, password, isNewAccount) => async (dispatch) => {
@@ -31,6 +55,9 @@ export const auth = (email, password, isNewAccount) => async (dispatch) => {
     password: password,
     returnSecureToken: true,
   };
+  const setExpirationDate = (expirationTime) =>
+    new Date(new Date().getTime() + expirationTime * 1000);
+
   let url = '/accounts:signUp?key=AIzaSyCriYLOrCB5Gqw868nZn7hFs3UyON4eJ8g';
   if (!isNewAccount) {
     url =
@@ -39,10 +66,15 @@ export const auth = (email, password, isNewAccount) => async (dispatch) => {
   dispatch(authStart());
   try {
     const response = await axiosFirebaseAuth.post(url, authData);
+    localStorage.setItem('token', response.data.idToken);
+    localStorage.setItem(
+      'expirationDate',
+      setExpirationDate(response.data.expiresIn)
+    );
+    localStorage.setItem('localId', response.data.localId);
     dispatch(authSuccess(response.data));
-    dispatch(authCheckTimeout(response.data.expiresIn));
+    dispatch(authLogoutTimeout(response.data.expiresIn));
   } catch (err) {
     dispatch(authFail(err.response.data.error.message));
-    console.log(err.response.data.error.message);
   }
 };
