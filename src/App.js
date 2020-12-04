@@ -1,4 +1,4 @@
-import { Fragment } from 'react';
+import { useEffect, Fragment } from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
@@ -12,27 +12,29 @@ import Logout from './containers/AuthPage/Logout/Logout';
 import { authCheckValidity } from './redux/actions/index';
 
 const App = ({ isAuth, onAuthCheckValidity }) => {
-  onAuthCheckValidity();
-  let routes = (
+  useEffect(() => onAuthCheckValidity(), [onAuthCheckValidity]);
+
+  const protectedRoutes = (
+    <Fragment>
+      <Route path="/checkout" component={CheckoutPage} />
+      <Route path="/orders" component={OrdersPage} />
+      <Route path="/logout" component={Logout} />
+    </Fragment>
+  );
+
+  const routes = (
     <Fragment>
       <Route path="/auth" component={AuthPage} />
       <Route path="/" exact component={BurgerBuilderPage} />
       <Redirect to="/" />
     </Fragment>
   );
-
-  if (isAuth) {
-    routes = (
-      <Fragment>
-        <Route path="/checkout" component={CheckoutPage} />
-        <Route path="/orders" component={OrdersPage} />
-        <Route path="/logout" component={Logout} />
-        <Route path="/auth" component={AuthPage} />
-        <Route path="/" exact component={BurgerBuilderPage} />
-      </Fragment>
-    );
-  }
-  return <Layout>{routes}</Layout>;
+  return (
+    <Layout>
+      {routes}
+      {isAuth ? protectedRoutes : null}
+    </Layout>
+  );
 };
 
 const mapStateToProps = ({ auth: { token } }) => ({

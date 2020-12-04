@@ -1,3 +1,5 @@
+import { memo } from 'react';
+
 import BurgerBuildControl from './BurgerBuildControl/BurgerBuildControl';
 import Button from '../../UI/Button/Button';
 
@@ -67,4 +69,4 @@ const BurgerBuildControls = ({
   );
 };
 
-export default BurgerBuildControls;
+export default memo(BurgerBuildControls);

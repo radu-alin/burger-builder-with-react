@@ -3,7 +3,7 @@ import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { authLogout } from '../../../redux/actions/index';
 
-const Logout = ({ history, onLogout }) => {
+const Logout = ({ onLogout }) => {
   useEffect(() => onLogout());
   return <Redirect to="/" />;
 };

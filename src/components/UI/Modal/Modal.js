@@ -1,4 +1,4 @@
-import { Fragment } from 'react';
+import { memo, Fragment } from 'react';
 import ReactDom from 'react-dom';
 
 import Backdrop from '../Backdrop/Backdrop';
@@ -19,4 +19,9 @@ const Modal = ({ children, show, disableModal }) => {
   );
 };
 
-export default Modal;
+export default memo(Modal, (prevProps, nextProps) => {
+  return (
+    prevProps.children !== nextProps.children &&
+    nextProps.show === prevProps.show
+  );
+});

@@ -8,7 +8,7 @@
   background: #c9c9c9;
   border: 1px solid #ccc;
   box-shadow: 1px 1px 1px black;
-  transition: all 0.3s ease-out;
+  transition: all 0.5s ease-in-out;
   transform: translateY(-150vh);
 
   &.show {

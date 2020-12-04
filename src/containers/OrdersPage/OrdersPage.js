@@ -23,7 +23,7 @@ const OrdersPage = ({
   useEffect(() => {
     onFetchOrders(token, userId);
     return () => onResetSpinner();
-  }, [onFetchOrders, onResetSpinner, token]);
+  }, [onFetchOrders, onResetSpinner, token, userId]);
 
   const renderOrdersPage = () => {
     let renderOrders = <Spinner center />;

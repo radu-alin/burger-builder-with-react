@@ -1,56 +1,50 @@
-import React, { Component } from 'react';
+import { useState, useEffect, useCallback, Fragment } from 'react';
 
 import Modal from '../../components/UI/Modal/Modal';
 
-const withErrorHandler = (WrappedComponent, axios) =>
-  class extends Component {
-    constructor() {
-      super();
-      this.state = {
-        isError: false,
-        errorMsg: null,
+const withErrorHandler = (WrappedComponent, axios) => {
+  const WithErrorHandler = (props) => {
+    const [isError, setIsError] = useState({ isError: false, errorMsg: null });
+
+    const reqInterceptor = axios.interceptors.request.use(
+      (req) => req,
+      (err) => setIsError({ isError: true, errorMsg: err.message })
+    );
+    const resInterceptor = axios.interceptors.response.use(
+      (res) => res,
+      (err) => setIsError({ isError: true, errorMsg: err.message })
+    );
+
+    useEffect(() => {
+      return () => {
+        axios.interceptors.request.eject(reqInterceptor);
+        axios.interceptors.response.eject(resInterceptor);
       };
+    }, [reqInterceptor, resInterceptor]);
 
-      this.axiosErrorHandler();
-    }
+    const disableErrorHandler = useCallback(() => {
+      setIsError({ isError: false, errorMsg: null });
+    }, []);
 
-    axiosErrorHandler = () => {
-      this.reqInterceptor = axios.interceptors.request.use(
-        (req) => req,
-        (err) => this.setState({ isError: true, errorMsg: err.message })
-      );
-      this.resInterceptor = axios.interceptors.response.use(
-        (res) => res,
-        (err) => {
-          this.setState({ isError: true, errorMsg: err.message });
-        }
-      );
-    };
-
-    componentWillUnmount() {
-      axios.interceptors.request.eject(this.reqInterceptor);
-      axios.interceptors.response.eject(this.resInterceptor);
-    }
-
-    errorConfirmHandler = () => {
-      this.setState({ isError: false, errorMsg: null });
-    };
-
-    render() {
-      return (
-        <React.Fragment>
-          {this.state.isError ? (
-            <Modal
-              show={this.state.isError}
-              disableModal={this.errorConfirmHandler}
-            >
-              {this.state.errorMsg}
-            </Modal>
-          ) : null}
-          <WrappedComponent {...this.props} />
-        </React.Fragment>
-      );
-    }
+    return (
+      <Fragment>
+        {isError.isError ? (
+          <Modal show={isError.isError} disableModal={disableErrorHandler}>
+            {isError.errorMsg}
+          </Modal>
+        ) : null}
+        <WrappedComponent {...props} />
+      </Fragment>
+    );
   };
+  WithErrorHandler.displayName = `WithErorHandler(${getDisplayName(
+    WrappedComponent
+  )})`;
+  return WithErrorHandler;
+};
+
+function getDisplayName(WrappedComponent) {
+  return WrappedComponent.displayName || WrappedComponent.name || 'Component';
+}
 
 export default withErrorHandler;

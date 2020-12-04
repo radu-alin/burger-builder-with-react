@@ -1,4 +1,4 @@
-import { Fragment } from 'react';
+import { Fragment, memo } from 'react';
 
 import Logo from '../../Logo/Logo';
 import NavigationItems from '../NavigationItems/NavigationItems';
@@ -7,14 +7,13 @@ import Backdrop from '../../UI/Backdrop/Backdrop';
 import './SideDrawer.scss';
 
 const Sidedrawer = ({ isAuth, closeSideDrawer, showSideDrawer }) => {
-  console.log('[Sidedrawer] - render()');
   const classes = showSideDrawer
     ? 'side-drawer open p-2 bg-brown-dark'
     : 'side-drawer close p-2 bg-brown-dark';
   return (
     <Fragment>
       <Backdrop onClickAction={closeSideDrawer} show={showSideDrawer} />
-      <header id="SideDrawer" className={classes}>
+      <header id="SideDrawer" className={classes} onClick={closeSideDrawer}>
         <Logo size={'small'} />
         <NavigationItems isAuth={isAuth} />
       </header>
@@ -22,4 +21,4 @@ const Sidedrawer = ({ isAuth, closeSideDrawer, showSideDrawer }) => {
   );
 };
 
-export default Sidedrawer;
+export default memo(Sidedrawer);

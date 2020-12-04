@@ -8,11 +8,14 @@ const OrderSummary = ({
   continuePurchase,
   cancelPurchase,
 }) => {
-  const renderIngredients = Object.keys(ingredients).map((igKey) => (
-    <li key={igKey}>
-      {igKey.toLocaleUpperCase()}: {ingredients[igKey]}
-    </li>
-  ));
+  const renderIngredients = ingredients
+    ? Object.keys(ingredients).map((igKey) => (
+        <li key={igKey}>
+          {igKey.toLocaleUpperCase()}: {ingredients[igKey]}
+        </li>
+      ))
+    : null;
+
   return (
     <Fragment>
       <h3>Your Order</h3>

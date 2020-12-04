@@ -1,4 +1,11 @@
-import { Fragment, Component } from 'react';
+import {
+  memo,
+  useState,
+  useEffect,
+  useCallback,
+  useMemo,
+  Fragment,
+} from 'react';
 import { connect } from 'react-redux';
 
 import BurgerView from '../../components/Burger/BurgerView/BurgerView';
@@ -16,94 +23,95 @@ import {
   fetchIngredients,
 } from '../../redux/actions/index';
 
-class BurgerBuilderPage extends Component {
-  state = {
-    isEnableCheckout: false,
-  };
+const BurgerBuilderPage = memo(
+  ({
+    ingredients,
+    totalPrice,
+    isLoading,
+    isError,
+    isAuth,
+    onAddIngredient,
+    onRemoveIngredient,
+    onFetchIngredients,
+    history,
+  }) => {
+    const [isEnableCheckout, setIsEnableCheckout] = useState(false);
 
-  componentDidMount() {
-    this.props.onFetchIngredients();
-  }
+    useEffect(() => onFetchIngredients(), [onFetchIngredients]);
 
-  lessButtonDisabledHandler = () => {
-    const disableInfo = {
-      ...this.props.ingredients,
+    const lessButtonDisabledHandler = useMemo(() => {
+      const disableInfo = {
+        ...ingredients,
+      };
+      for (const key in disableInfo) {
+        disableInfo[key] = disableInfo[key] <= 0;
+      }
+      return disableInfo;
+    }, [ingredients]);
+
+    const orderNowButtonDisabledHandler = (price) => {
+      return price > 4;
     };
-    for (const key in disableInfo) {
-      disableInfo[key] = disableInfo[key] <= 0;
-    }
-    return disableInfo;
-  };
 
-  orderNowButtonDisabledHandler = (price) => {
-    return price > 4;
-  };
+    const enableCheckoutHandler = useCallback(() => {
+      if (isAuth) {
+        setIsEnableCheckout(true);
+      } else {
+        history.push('/auth');
+      }
+    }, [isAuth, history]);
 
-  enableCheckoutHandler = () => {
-    if (this.props.isAuth) {
-      this.setState({ isEnableCheckout: true });
-    } else {
-      this.props.history.push('/auth');
-    }
-  };
+    const disableCheckoutHandler = useCallback(() => {
+      setIsEnableCheckout(false);
+    }, [setIsEnableCheckout]);
 
-  disableCheckoutHandler = () => {
-    this.setState({ isEnableCheckout: false });
-  };
+    const continueCheckoutHandler = () => {
+      history.push('/checkout');
+    };
 
-  continueCheckoutHandler = () => {
-    this.props.history.push('/checkout');
-  };
-
-  renderModal = () => {
-    return (
-      <Modal
-        show={this.state.isEnableCheckout}
-        disableModal={this.disableCheckoutHandler}
-      >
-        <OrderSummary
-          ingredients={this.props.ingredients}
-          totalPrice={this.props.totalPrice}
-          cancelPurchase={this.disableCheckoutHandler}
-          continuePurchase={this.continueCheckoutHandler}
-        />
-      </Modal>
-    );
-  };
-
-  renderBugerBuilderPage = () => {
-    let burgerBuilderPage = <Spinner center />;
-    if (!this.props.isLoading) {
-      burgerBuilderPage = !this.props.isError ? (
-        <Fragment>
-          <BurgerView ingredients={this.props.ingredients} size={'large'} />
-          <BurgerBuildControls
-            ingAdd={this.props.onAddIngredient}
-            ingRemove={this.props.onRemoveIngredient}
-            lessButtonDisabled={this.lessButtonDisabledHandler()}
-            orderNowButtonDisabled={this.orderNowButtonDisabledHandler(
-              this.props.totalPrice
-            )}
-            totalPrice={this.props.totalPrice}
-            enableCheckout={this.enableCheckoutHandler}
-            isAuth={this.props.isAuth}
+    const renderModal = () => {
+      return (
+        <Modal show={isEnableCheckout} disableModal={disableCheckoutHandler}>
+          <OrderSummary
+            ingredients={ingredients}
+            totalPrice={totalPrice}
+            cancelPurchase={disableCheckoutHandler}
+            continuePurchase={continueCheckoutHandler}
           />
-        </Fragment>
-      ) : null;
-    }
-    return burgerBuilderPage;
-  };
+        </Modal>
+      );
+    };
 
-  render() {
+    const renderBugerBuilderPage = () => {
+      let burgerBuilderPage = <Spinner center />;
+      if (!isLoading) {
+        burgerBuilderPage = !isError ? (
+          <Fragment>
+            <BurgerView ingredients={ingredients} size={'large'} />
+            <BurgerBuildControls
+              ingAdd={onAddIngredient}
+              ingRemove={onRemoveIngredient}
+              lessButtonDisabled={lessButtonDisabledHandler}
+              orderNowButtonDisabled={orderNowButtonDisabledHandler(totalPrice)}
+              totalPrice={totalPrice}
+              enableCheckout={enableCheckoutHandler}
+              isAuth={isAuth}
+            />
+          </Fragment>
+        ) : null;
+      }
+      return burgerBuilderPage;
+    };
+
     console.log('[BurgerBuilderPage] - render()');
     return (
       <main id="BurgerBuilderPage">
-        {this.renderBugerBuilderPage()}
-        {this.state.isEnableCheckout ? this.renderModal() : null}
+        {renderBugerBuilderPage()}
+        {renderModal()}
       </main>
     );
   }
-}
+);
 
 const mapStateTopPros = ({
   burger: { ingredients, totalPrice, isLoading, isError },

@@ -1,3 +1,5 @@
+import { memo } from 'react';
+
 import BurgerIngredients from '../BurgerIngredients/BurgerIngredients';
 
 import './BurgerView.scss';
@@ -16,4 +18,4 @@ const BurgerView = ({ ingredients, size }) => {
   );
 };
 
-export default BurgerView;
+export default memo(BurgerView);
