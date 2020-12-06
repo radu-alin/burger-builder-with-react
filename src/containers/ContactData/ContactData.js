@@ -1,9 +1,8 @@
-import { Fragment, useState } from 'react';
+import { Fragment, useState, lazy } from 'react';
 import { connect } from 'react-redux';
 
 import { defaultState } from './state';
 
-import Input from '../../components/UI/Input/Input';
 import Button from '../../components/UI/Button/Button';
 import Spinner from '../../components/UI/Spinner/Spinner';
 
@@ -14,6 +13,12 @@ import withErrorHandler from '../../hoc/withtErrorHandler/withErrorHandler';
 import { purchaseBurger } from '../../redux/actions';
 
 import './ContactData.scss';
+
+const Input = lazy(() =>
+  import(
+    /* webpackPrefetch: true,  webpackChunkName: "input" */ '../../components/UI/Input/Input'
+  )
+);
 
 const ContactDataPage = ({
   ingredients,

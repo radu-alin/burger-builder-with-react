@@ -1,15 +1,32 @@
-import { useEffect, Fragment } from 'react';
+import { useEffect, Fragment, lazy, Suspense } from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import Layout from './hoc/Layout/Layout';
 import BurgerBuilderPage from './containers/BurgerBuilderPage/BurgerBuilderPage';
-import CheckoutPage from './containers/CheckoutPage/CheckoutPage';
-import OrdersPage from './containers/OrdersPage/OrdersPage';
-import AuthPage from './containers/AuthPage/AuthPage';
-import Logout from './containers/AuthPage/Logout/Logout';
 
 import { authCheckValidity } from './redux/actions/index';
+
+const CheckoutPage = lazy(() =>
+  import(
+    /* webpackPrefetch: true,  webpackChunkName: "checkout" */ './containers/CheckoutPage/CheckoutPage.js'
+  )
+);
+const OrdersPage = lazy(() =>
+  import(
+    /* webpackPrefetch: true, webpackChunkName: "orders"  */ './containers/OrdersPage/OrdersPage.js'
+  )
+);
+const AuthPage = lazy(() =>
+  import(
+    /* webpackPrefetch: true, webpackChunkName: "auth" */ './containers/AuthPage/AuthPage.js'
+  )
+);
+const Logout = lazy(() =>
+  import(
+    /* webpackPrefetch: true , webpackChunkName: "logout" */ './containers/AuthPage/Logout/Logout.js'
+  )
+);
 
 const App = ({ isAuth, onAuthCheckValidity }) => {
   useEffect(() => onAuthCheckValidity(), [onAuthCheckValidity]);
@@ -31,8 +48,10 @@ const App = ({ isAuth, onAuthCheckValidity }) => {
   );
   return (
     <Layout>
-      {routes}
-      {isAuth ? protectedRoutes : null}
+      <Suspense fallback>
+        {routes}
+        {isAuth ? protectedRoutes : null}
+      </Suspense>
     </Layout>
   );
 };
