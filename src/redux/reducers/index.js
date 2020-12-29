@@ -5,11 +5,9 @@ import { checkoutReducer } from '../reducers/checkoutReducer';
 import { ordersReducer } from '../reducers/ordersReducer';
 import { authReducer } from '../reducers/authReducer';
 
-const rootReducer = combineReducers({
+export const rootReducer = combineReducers({
   burger: burgerBuilderReducer,
   checkout: checkoutReducer,
   orders: ordersReducer,
   auth: authReducer,
 });
-
-export default rootReducer;

@@ -33,7 +33,7 @@ const AuthPage = ({ isAuth, isLoading, isError, isBuilding, onAuth }) => {
         <section id="AuthForm" className="bg-brown-main">
           <div className="container py-2">
             <div className="auth-form py-2  bg-gray-main">
-              <h3>Enter You Contact Data</h3>
+              <h3>Enter Data to - {isAuth ? 'Sign In' : 'Sign Up'}</h3>
               <p>{errorMessage}</p>
               <form>{renderInputs(Input, formData, setFormData)}</form>
               <div className="buttons my-2">
@@ -81,9 +81,9 @@ const mapStateToProps = ({
   auth: { token, isLoading, isError },
   burger: { isBuilding },
 }) => ({
+  isAuth: !!token,
   isError,
   isLoading,
-  isAuth: !!token,
   isBuilding,
 });
 
